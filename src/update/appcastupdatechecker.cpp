@@ -155,7 +155,7 @@ IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStartElement(XmlDeseriali
     Q_UNUSED(namespaceUri)
     Q_UNUSED(attributes)
     
-    if (/*kChannelXmlElementName == deserializer->parentName() &&*/ AppcastItem::kXmlElementName == name) {
+    if (/*kChannelXmlElementName == deserializer->parentName() &&*/ AppcastItem::xmlName() == name) {
         mParsingItem = new AppcastItem(this);
         connect(mParsingItem, SIGNAL(parsed()), SLOT(onItemParsed()));
         return mParsingItem;

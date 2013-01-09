@@ -1,88 +1,99 @@
 #include "appcastitem.h"
 #include "appcastenclosure.h"
+#include "appcastxmlns.h"
 
 QTX_BEGIN_NAMESPACE
 
+using namespace __Appcast;
 
-const char AppcastItem::kSparkleXmlNamespace[] = "http://www.andymatuschak.org/xml-namespaces/sparkle";
-const char AppcastItem::kXmlElementName[] = "item";
-const char AppcastItem::kTitleXmlElementName[] = "title";
-const char AppcastItem::kLinkXmlElementName[] = "link";
-const char AppcastItem::kMinimumSystemVersionXmlElementName[] = "minimumSystemVersion";
+
+class AppcastItemPrivate
+{
+public:
+    void addEnclosure(AppcastEnclosure *enclosure);
+
+    QString title;
+    QUrl link;
+    QList<AppcastEnclosure *> enclosures;
+    QString minSystemVersion;
+    
+    QString characters;
+};
+
+
+QString AppcastItem::xmlName()
+{
+    return kRssItemXmlName;
+}
 
 AppcastItem::AppcastItem(QObject *parent /* = 0 */)
     : QObject(parent),
-      mParsingEnclosure(0),
-      mDepth(0)
+      d_ptr(new AppcastItemPrivate())
 {
 }
 
 AppcastItem::~AppcastItem()
 {
+    if (d_ptr) {
+        delete d_ptr;
+        d_ptr = 0;
+    }
 }
 
 QString AppcastItem::title() const
 {
-    return mTitle;
+    return d_ptr->title;
 }
 
 QString AppcastItem::version() const
 {
-    return mVersion;
+    // Sparkle's RSS extension is rather poorly specified.  The version is
+    // logically associated with the item, but is indicated as an attribute
+    // of the enclosure (of which there can be many, in the case of
+    // per-platform enclosures).  The version of the first enclosure will be
+    // treated as the item's version.  For consistency, it is recommended
+    // that any item containing multiple enclosures indicates an identical
+    // version for each.
+
+    const AppcastEnclosure *e = enclosure();
+    if (e) {
+        return e->version();
+    }
+
+    return "";
 }
 
 QUrl AppcastItem::linkUrl() const
 {
-    return mLinkUrl;
+    return d_ptr->link;
 }
 
 const AppcastEnclosure *AppcastItem::enclosure() const
 {
-    if (mEnclosures.isEmpty()) {
+    if (d_ptr->enclosures.isEmpty()) {
         return 0;
     }
     
-    return mEnclosures.at(0);
+    return d_ptr->enclosures.at(0);
 }
 
 QString AppcastItem::minSystemVersion() const
 {
-    return mMinSystemVersion;
-}
-
-void AppcastItem::onEnclosureParsed()
-{
-    mParsingEnclosure->disconnect(this);
-    
-    mEnclosures.append(mParsingEnclosure);
-    if (mEnclosures.size() == 1) {
-        // Sparkle's RSS extension is rather poorly specified.  The version is
-        // logically associated with the item, but is indicated as an attribute
-        // of the enclosure (of which there can be many, in the case of
-        // per-platform enclosures).  The version of the first enclosure will be
-        // treated as the item's version.  For consistency, it is recommended
-        // that any item containing multiple enclosures indicates an identical
-        // version for each.
-        mVersion = mParsingEnclosure->version();
-    }
-    
-    mParsingEnclosure = 0;
+    return d_ptr->minSystemVersion;
 }
 
 IXmlDeserializing *AppcastItem::deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes)
 {
     Q_UNUSED(deserializer)
     Q_UNUSED(namespaceUri)
-    Q_UNUSED(name)
     Q_UNUSED(attributes)
     
     if (AppcastEnclosure::xmlName() == name) {
-        mParsingEnclosure = new AppcastEnclosure(this);
-        connect(mParsingEnclosure, SIGNAL(parsed()), SLOT(onEnclosureParsed()));
-        return mParsingEnclosure;
+        AppcastEnclosure *enclosure = new AppcastEnclosure(this);
+        d_ptr->addEnclosure(enclosure);
+        return enclosure;
     }
     
-    mDepth++;
     return this;
 }
 
@@ -90,21 +101,15 @@ void AppcastItem::deserializeXmlEndElement(XmlDeserializer *deserializer, const 
 {
     Q_UNUSED(deserializer)
     
-    if (!mDepth) {
-        emit parsed();
-        return;
+    if (kRssTitleXmlName == name) {
+        d_ptr->title = d_ptr->characters.trimmed();
+    } else if (kRssLinkXmlName == name) {
+        d_ptr->link = QUrl(d_ptr->characters.trimmed());
+    } else if (kSparkleXmlNamespaceUri == namespaceUri && kSparkleMinimumSystemVersionXmlName == name) {
+        d_ptr->minSystemVersion = d_ptr->characters.trimmed();
     }
     
-    if (kTitleXmlElementName == name) {
-        mTitle = mCharacters.trimmed();
-    } else if (kLinkXmlElementName == name) {
-        mLinkUrl = QUrl(mCharacters.trimmed());
-    } else if (namespaceUri == kSparkleXmlNamespace && kMinimumSystemVersionXmlElementName == name) {
-        mMinSystemVersion = mCharacters.trimmed();
-    }
-    
-    mDepth--;
-    mCharacters.clear();
+    d_ptr->characters.clear();
 }
 
 void AppcastItem::deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes)
@@ -117,7 +122,13 @@ void AppcastItem::deserializeXmlCharacters(XmlDeserializer *deserializer, const 
 {
     Q_UNUSED(deserializer)
     
-    mCharacters.append(text);
+    d_ptr->characters.append(text);
+}
+
+
+void AppcastItemPrivate::addEnclosure(AppcastEnclosure *enclosure)
+{
+    enclosures.append(enclosure);
 }
 
 

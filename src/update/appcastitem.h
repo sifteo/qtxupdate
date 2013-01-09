@@ -1,5 +1,5 @@
-#ifndef APPCASTITEM_H
-#define APPCASTITEM_H
+#ifndef QTXUPDATE_APPCASTITEM_H
+#define QTXUPDATE_APPCASTITEM_H
 
 #include "updateglobal.h"
 #include <QtxXml>
@@ -9,11 +9,15 @@ QTX_BEGIN_NAMESPACE
 
 
 class AppcastEnclosure;
+class AppcastItemPrivate;
 
 class AppcastItem : public QObject,
                     public IXmlDeserializing
 {
     Q_OBJECT
+    
+public:
+    static QString xmlName();
     
 public:
     AppcastItem(QObject *parent = 0);
@@ -25,39 +29,19 @@ public:
     const AppcastEnclosure *enclosure() const;
     QString minSystemVersion() const;
     
-signals:
-    void parsed();
-    
-private slots:
-    void onEnclosureParsed();
-    
 private:
     IXmlDeserializing *deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes);
     void deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri);	
     void deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes);
     void deserializeXmlCharacters(XmlDeserializer *deserializer, const QStringRef & text);
     
+protected:
+    AppcastItemPrivate *d_ptr;
 private:
-    QString mTitle;
-    QString mVersion;
-    QUrl mLinkUrl;
-    QList<AppcastEnclosure *> mEnclosures;
-    QString mMinSystemVersion;
-    
-    AppcastEnclosure *mParsingEnclosure;
-    QString mCharacters;
-    quint32 mDepth;
-    
-public:
-    static const char kSparkleXmlNamespace[];
-    static const char kXmlElementName[];
-private:
-    static const char kTitleXmlElementName[];
-    static const char kLinkXmlElementName[];
-    static const char kMinimumSystemVersionXmlElementName[];
+    Q_DECLARE_PRIVATE(AppcastItem);
 };
 
 
 QTX_END_NAMESPACE
 
-#endif // APPCASTITEM_H
+#endif // QTXUPDATE_APPCASTITEM_H
