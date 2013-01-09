@@ -1,7 +1,10 @@
 #ifndef ABSTRACTUPDATEFILTER_H
 #define ABSTRACTUPDATEFILTER_H
 
+#include "updateglobal.h"
 #include <QtCore>
+
+QTX_BEGIN_NAMESPACE
 
 
 class Update;
@@ -16,5 +19,8 @@ public:
     
     virtual QList<Update *> filter(const QList<Update *> candidates) = 0;
 };
+
+
+QTX_END_NAMESPACE
 
 #endif // ABSTRACTUPDATEFILTER_H

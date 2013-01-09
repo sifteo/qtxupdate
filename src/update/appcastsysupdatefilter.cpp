@@ -1,6 +1,7 @@
 #include "appcastsysupdatefilter.h"
 #include "appcastupdate.h"
-#include <QtxVersion>
+
+QTX_BEGIN_NAMESPACE
 
 
 AppcastSysUpdateFilter::AppcastSysUpdateFilter(QObject *parent /* = 0 */)
@@ -85,3 +86,6 @@ Version AppcastSysUpdateFilter::sysVersion()
     
     return Version();
 }
+
+
+QTX_END_NAMESPACE

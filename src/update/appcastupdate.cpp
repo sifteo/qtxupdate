@@ -2,6 +2,8 @@
 #include "appcastitem.h"
 #include "appcastenclosure.h"
 
+QTX_BEGIN_NAMESPACE
+
 
 AppcastUpdate::AppcastUpdate(AppcastItem *item, QObject *parent /* = 0 */)
   : Update(parent),
@@ -75,3 +77,6 @@ QString AppcastUpdate::minSystemVersion() const
     
     return mItem->minSystemVersion();
 }
+
+
+QTX_END_NAMESPACE

@@ -1,6 +1,8 @@
 #include "appcastitem.h"
 #include "appcastenclosure.h"
 
+QTX_BEGIN_NAMESPACE
+
 
 const char AppcastItem::kSparkleXmlNamespace[] = "http://www.andymatuschak.org/xml-namespaces/sparkle";
 const char AppcastItem::kXmlElementName[] = "item";
@@ -67,9 +69,9 @@ void AppcastItem::onEnclosureParsed()
     mParsingEnclosure = 0;
 }
 
-IXmlDeserializer* AppcastItem::deserializeXmlStartElement(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes)
+IXmlDeserializing *AppcastItem::deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     Q_UNUSED(namespaceUri)
     Q_UNUSED(name)
     Q_UNUSED(attributes)
@@ -84,9 +86,9 @@ IXmlDeserializer* AppcastItem::deserializeXmlStartElement(XmlReader* reader, con
     return this;
 }
 
-void AppcastItem::deserializeXmlEndElement(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name)
+void AppcastItem::deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     
     if (!mDepth) {
         emit parsed();
@@ -105,15 +107,18 @@ void AppcastItem::deserializeXmlEndElement(XmlReader* reader, const QStringRef &
     mCharacters.clear();
 }
 
-void AppcastItem::deserializeXmlAttributes(XmlReader* reader, const QXmlStreamAttributes & attributes)
+void AppcastItem::deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     Q_UNUSED(attributes)
 }
 
-void AppcastItem::deserializeXmlCharacters(XmlReader* reader, const QStringRef & text)
+void AppcastItem::deserializeXmlCharacters(XmlDeserializer *deserializer, const QStringRef & text)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     
     mCharacters.append(text);
 }
+
+
+QTX_END_NAMESPACE

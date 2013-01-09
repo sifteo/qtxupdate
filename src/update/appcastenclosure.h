@@ -1,12 +1,15 @@
 #ifndef APPCASTENCLOSURE_H
 #define APPCASTENCLOSURE_H
 
+#include "updateglobal.h"
+#include <QtxXml>
 #include <QtCore>
-#include "../../../src/xml/xml.h"
+
+QTX_BEGIN_NAMESPACE
 
 
 class AppcastEnclosure : public QObject,
-                         public IXmlDeserializer
+                         public IXmlDeserializing
 {
     Q_OBJECT
     
@@ -22,10 +25,10 @@ signals:
     void parsed();
     
 private:
-    IXmlDeserializer* deserializeXmlStartElement(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes);
-    void deserializeXmlEndElement(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name);	
-    void deserializeXmlAttributes(XmlReader* reader, const QXmlStreamAttributes & attributes);
-    void deserializeXmlCharacters(XmlReader* reader, const QStringRef & text);
+    IXmlDeserializing *deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes);
+    void deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri);	
+    void deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes);
+    void deserializeXmlCharacters(XmlDeserializer *deserializer, const QStringRef & text);
     
 private:
     QString mVersion;
@@ -41,5 +44,8 @@ private:
     static const char kUrlXmlElementName[];
     static const char kTypeXmlElementName[];
 };
+
+
+QTX_END_NAMESPACE
 
 #endif // APPCASTENCLOSURE_H

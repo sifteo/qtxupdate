@@ -1,6 +1,7 @@
 #ifndef QTXUPDATE_MODULE_H
 #define QTXUPDATE_MODULE_H
 
+#include "../src/update/updateglobal.h"
 #include "../src/update/abstractupdatechecker.h"
 #include "../src/update/abstractupdatefilter.h"
 #include "../src/update/abstractversioncomparator.h"

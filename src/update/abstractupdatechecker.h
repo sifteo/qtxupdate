@@ -1,7 +1,10 @@
 #ifndef ABSTRACTUPDATECHECKER_H
 #define ABSTRACTUPDATECHECKER_H
 
+#include "updateglobal.h"
 #include <QtCore>
+
+QTX_BEGIN_NAMESPACE
 
 
 class Update;
@@ -30,5 +33,8 @@ protected:
 private:
     QString mErrorString;
 };
+
+
+QTX_END_NAMESPACE
 
 #endif // ABSTRACTUPDATECHECKER_H

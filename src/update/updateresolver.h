@@ -1,7 +1,10 @@
 #ifndef UPDATERESOLVER_H
 #define UPDATERESOLVER_H
 
+#include "updateglobal.h"
 #include <QtCore>
+
+QTX_BEGIN_NAMESPACE
 
 
 class AbstractUpdateChecker;
@@ -47,5 +50,8 @@ private:
     AbstractVersionComparator *mComparator;
     QList<AbstractUpdateFilter *> mFilters;
 };
+
+
+QTX_END_NAMESPACE
 
 #endif // UPDATERESOLVER_H

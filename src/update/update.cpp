@@ -1,5 +1,7 @@
 #include "update.h"
 
+QTX_BEGIN_NAMESPACE
+
 
 Update::Update(QObject *parent /* = 0 */)
   : QObject(parent)
@@ -9,3 +11,6 @@ Update::Update(QObject *parent /* = 0 */)
 Update::~Update()
 {
 }
+
+
+QTX_END_NAMESPACE

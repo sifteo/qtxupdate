@@ -5,6 +5,8 @@
 #include "semverversioncomparator.h"
 #include "update.h"
 
+QTX_BEGIN_NAMESPACE
+
 
 UpdateResolver::UpdateResolver(QObject *parent /* = 0 */)
   : QObject(parent),
@@ -134,3 +136,6 @@ void UpdateResolver::onCheckerError(qint32 code)
     qDebug() << "UpdateResolver::onCheckerError";
     qDebug() << "  code: " << code;
 }
+
+
+QTX_END_NAMESPACE

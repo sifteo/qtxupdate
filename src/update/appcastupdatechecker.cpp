@@ -3,6 +3,8 @@
 #include "appcastitem.h"
 #include <QtxNetwork>
 
+QTX_BEGIN_NAMESPACE
+
 
 const char AppcastUpdateChecker::kChannelXmlElementName[] = "channel";
 
@@ -77,7 +79,7 @@ void AppcastUpdateChecker::onReplyReceived()
         mXmlReader->deleteLater();
     }
     
-    mXmlReader = new XmlReader();
+    mXmlReader = new XmlDeserializer();
     mXmlReader->setDelegate(this);
 }
 
@@ -118,28 +120,28 @@ void AppcastUpdateChecker::onItemParsed()
     mParsingItem = 0;
 }
 
-IXmlDeserializer* AppcastUpdateChecker::rootXmlDeserializer(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes)
+IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes)
 {
-    Q_UNUSED(reader)
-    Q_UNUSED(namespaceUri)
+    Q_UNUSED(deserializer)
     Q_UNUSED(name)
+    Q_UNUSED(namespaceUri)
     Q_UNUSED(attributes)
     
     return this;
 }
 
-void AppcastUpdateChecker::xmlReadComplete(XmlReader* reader)
+void AppcastUpdateChecker::deserializeXmlEnd(XmlDeserializer *deserializer)
 {
     //qDebug() << "AppcastUpdateChecker::xmlReadComplete()";
     
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     
     emit finished();
 }
 
-void AppcastUpdateChecker::xmlReadError(XmlReader* reader, const QXmlStreamReader::Error err, const QString & errorString)
+void AppcastUpdateChecker::deserializeXmlError(XmlDeserializer *deserializer, const QXmlStreamReader::Error err, const QString & errorString)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     Q_UNUSED(err)
     Q_UNUSED(errorString)
     
@@ -147,13 +149,13 @@ void AppcastUpdateChecker::xmlReadError(XmlReader* reader, const QXmlStreamReade
     emit error(-1);
 }
 
-IXmlDeserializer* AppcastUpdateChecker::deserializeXmlStartElement(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes)
+IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri,  const QXmlStreamAttributes & attributes)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     Q_UNUSED(namespaceUri)
     Q_UNUSED(attributes)
     
-    if (kChannelXmlElementName == reader->parentName() && AppcastItem::kXmlElementName == name) {
+    if (/*kChannelXmlElementName == deserializer->parentName() &&*/ AppcastItem::kXmlElementName == name) {
         mParsingItem = new AppcastItem(this);
         connect(mParsingItem, SIGNAL(parsed()), SLOT(onItemParsed()));
         return mParsingItem;
@@ -162,21 +164,24 @@ IXmlDeserializer* AppcastUpdateChecker::deserializeXmlStartElement(XmlReader* re
     return this;
 }
 
-void AppcastUpdateChecker::deserializeXmlEndElement(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name)
+void AppcastUpdateChecker::deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri)
 {
-    Q_UNUSED(reader)
-    Q_UNUSED(namespaceUri)
+    Q_UNUSED(deserializer)
     Q_UNUSED(name)
+    Q_UNUSED(namespaceUri)
 }
 
-void AppcastUpdateChecker::deserializeXmlAttributes(XmlReader* reader, const QXmlStreamAttributes & attributes)
+void AppcastUpdateChecker::deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     Q_UNUSED(attributes)
 }
 
-void AppcastUpdateChecker::deserializeXmlCharacters(XmlReader* reader, const QStringRef & text)
+void AppcastUpdateChecker::deserializeXmlCharacters(XmlDeserializer *deserializer, const QStringRef & text)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     Q_UNUSED(text)
 }
+
+
+QTX_END_NAMESPACE

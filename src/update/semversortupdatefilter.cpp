@@ -2,6 +2,8 @@
 #include "update.h"
 #include <QtxVersion>
 
+QTX_BEGIN_NAMESPACE
+
 
 SemVerSortUpdateFilter::SemVerSortUpdateFilter(QObject *parent /* = 0 */)
   : AbstractUpdateFilter(parent)
@@ -34,3 +36,6 @@ bool SemVerSortUpdateFilter::greaterThan(const Update *u1, const Update *u2)
     
     return v1 > v2;
 }
+
+
+QTX_END_NAMESPACE

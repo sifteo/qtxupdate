@@ -1,6 +1,8 @@
 #include "appcastenclosure.h"
 #include "appcastitem.h"
 
+QTX_BEGIN_NAMESPACE
+
 
 const char AppcastEnclosure::kXmlElementName[] = "enclosure";
 const char AppcastEnclosure::kVersionXmlElementName[] = "version";
@@ -32,9 +34,9 @@ QString AppcastEnclosure::mimeType() const
     return mMimeType;
 }
 
-IXmlDeserializer* AppcastEnclosure::deserializeXmlStartElement(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes)
+IXmlDeserializing *AppcastEnclosure::deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri,  const QXmlStreamAttributes & attributes)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     Q_UNUSED(namespaceUri)
     Q_UNUSED(name)
     Q_UNUSED(attributes)
@@ -43,9 +45,9 @@ IXmlDeserializer* AppcastEnclosure::deserializeXmlStartElement(XmlReader* reader
     return this;
 }
 
-void AppcastEnclosure::deserializeXmlEndElement(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name)
+void AppcastEnclosure::deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     Q_UNUSED(namespaceUri)
     Q_UNUSED(name)
     
@@ -57,9 +59,9 @@ void AppcastEnclosure::deserializeXmlEndElement(XmlReader* reader, const QString
     mDepth--;
 }
 
-void AppcastEnclosure::deserializeXmlAttributes(XmlReader* reader, const QXmlStreamAttributes & attributes)
+void AppcastEnclosure::deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     Q_UNUSED(attributes)
     
     mVersion = attributes.value(AppcastItem::kSparkleXmlNamespace, kVersionXmlElementName).toString();
@@ -67,8 +69,11 @@ void AppcastEnclosure::deserializeXmlAttributes(XmlReader* reader, const QXmlStr
     mMimeType = attributes.value("", kTypeXmlElementName).toString();
 }
 
-void AppcastEnclosure::deserializeXmlCharacters(XmlReader* reader, const QStringRef & text)
+void AppcastEnclosure::deserializeXmlCharacters(XmlDeserializer *deserializer, const QStringRef & text)
 {
-    Q_UNUSED(reader)
+    Q_UNUSED(deserializer)
     Q_UNUSED(text)
 }
+
+
+QTX_END_NAMESPACE

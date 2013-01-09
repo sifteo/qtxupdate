@@ -1,9 +1,12 @@
 #ifndef APPCASTSYSUPDATEFILTER_H
 #define APPCASTSYSUPDATEFILTER_H
 
-#include <QtCore>
-#include <QtxVersion>
+#include "updateglobal.h"
 #include "abstractupdatefilter.h"
+#include <QtxVersion>
+#include <QtCore>
+
+QTX_BEGIN_NAMESPACE
 
 
 class AppcastSysUpdateFilter : public AbstractUpdateFilter
@@ -19,5 +22,8 @@ public:
 private:
     static Version sysVersion();
 };
+
+
+QTX_END_NAMESPACE
 
 #endif // APPCASTSYSUPDATEFILTER_H

@@ -1,10 +1,13 @@
 #ifndef APPCASTUPDATECHECKER_H
 #define APPCASTUPDATECHECKER_H
 
-#include <QtCore>
-#include <QtNetwork>
-#include "../../../src/xml/xml.h"
+#include "updateglobal.h"
 #include "abstractupdatechecker.h"
+#include <QtxXml>
+#include <QtNetwork>
+#include <QtCore>
+
+QTX_BEGIN_NAMESPACE
 
 
 // Update Checker -> list of packages/versions -> compatibility checker -> single package/version -> update applyer
@@ -17,8 +20,8 @@ class Update;
 class AppcastItem;
 
 class AppcastUpdateChecker : public AbstractUpdateChecker,
-                             public IXmlReaderDelegate,
-                             public IXmlDeserializer
+                             public IXmlDeserializerDelegate,
+                             public IXmlDeserializing
 {
     Q_OBJECT
     
@@ -44,20 +47,20 @@ private slots:
     void onItemParsed();
 
 private:
-    IXmlDeserializer* rootXmlDeserializer(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes);
-    void xmlReadComplete(XmlReader* reader);
-    void xmlReadError(XmlReader* reader, const QXmlStreamReader::Error error, const QString & errorString);
+    IXmlDeserializing *deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes);
+    void deserializeXmlEnd(XmlDeserializer *deserializer);
+    void deserializeXmlError(XmlDeserializer *deserializer, const QXmlStreamReader::Error error, const QString & errorString);
     
-    IXmlDeserializer* deserializeXmlStartElement(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes);
-    void deserializeXmlEndElement(XmlReader* reader, const QStringRef & namespaceUri, const QStringRef & name); 
-    void deserializeXmlAttributes(XmlReader* reader, const QXmlStreamAttributes & attributes);
-    void deserializeXmlCharacters(XmlReader* reader, const QStringRef & text);
+    IXmlDeserializing *deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes);
+    void deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri); 
+    void deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes);
+    void deserializeXmlCharacters(XmlDeserializer *deserializer, const QStringRef & text);
 
 private:
     QUrl mUrl;
     QNetworkRequest mRequest;
     NetworkExchange *mExchange;
-    XmlReader* mXmlReader;
+    XmlDeserializer* mXmlReader;
     
     QList<Update *> mUpdates;
     AppcastItem *mParsingItem;
@@ -67,5 +70,8 @@ private:
 private:
     static const char kChannelXmlElementName[];
 };
+
+
+QTX_END_NAMESPACE
 
 #endif // APPCASTUPDATECHECKER_H

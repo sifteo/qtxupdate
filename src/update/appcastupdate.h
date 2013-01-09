@@ -1,8 +1,11 @@
 #ifndef APPCASTUPDATE_H
 #define APPCASTUPDATE_H
 
-#include <QtCore>
+#include "updateglobal.h"
 #include "update.h"
+#include <QtCore>
+
+QTX_BEGIN_NAMESPACE
 
 
 class AppcastItem;
@@ -26,5 +29,8 @@ public:
 private:
     AppcastItem *mItem;
 };
+
+
+QTX_END_NAMESPACE
 
 #endif // APPCASTUPDATE_H
