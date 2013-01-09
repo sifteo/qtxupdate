@@ -1,5 +1,5 @@
-#ifndef APPCASTENCLOSURE_H
-#define APPCASTENCLOSURE_H
+#ifndef QTXUPDATE_APPCASTENCLOSURE_H
+#define QTXUPDATE_APPCASTENCLOSURE_H
 
 #include "updateglobal.h"
 #include <QtxXml>
@@ -7,6 +7,8 @@
 
 QTX_BEGIN_NAMESPACE
 
+
+class AppcastEnclosurePrivate;
 
 class AppcastEnclosure : public QObject,
                          public IXmlDeserializing
@@ -24,31 +26,19 @@ public:
     QUrl url() const;
     QString mimeType() const;
     
-signals:
-    void parsed();
     
-private:
     IXmlDeserializing *deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes);
     void deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri);	
     void deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes);
     void deserializeXmlCharacters(XmlDeserializer *deserializer, const QStringRef & text);
     
+protected:
+    AppcastEnclosurePrivate *d_ptr;
 private:
-    QString mVersion;
-    QUrl mUrl;
-    QString mMimeType;
-    
-    quint32 mDepth;
-    
-public:
-    static const char kXmlElementName[];
-private:
-    static const char kVersionXmlElementName[];
-    static const char kUrlXmlElementName[];
-    static const char kTypeXmlElementName[];
+    Q_DECLARE_PRIVATE(AppcastEnclosure);
 };
 
 
 QTX_END_NAMESPACE
 
-#endif // APPCASTENCLOSURE_H
+#endif // QTXUPDATE_APPCASTENCLOSURE_H

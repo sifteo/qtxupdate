@@ -76,7 +76,7 @@ IXmlDeserializing *AppcastItem::deserializeXmlStartElement(XmlDeserializer *dese
     Q_UNUSED(name)
     Q_UNUSED(attributes)
     
-    if (AppcastEnclosure::kXmlElementName == name) {
+    if (AppcastEnclosure::xmlName() == name) {
         mParsingEnclosure = new AppcastEnclosure(this);
         connect(mParsingEnclosure, SIGNAL(parsed()), SLOT(onEnclosureParsed()));
         return mParsingEnclosure;

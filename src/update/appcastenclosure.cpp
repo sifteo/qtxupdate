@@ -1,43 +1,54 @@
 #include "appcastenclosure.h"
 #include "appcastitem.h"
+#include "appcastxmlns.h"
 
 QTX_BEGIN_NAMESPACE
 
+using namespace __Appcast;
 
-const char AppcastEnclosure::kXmlElementName[] = "enclosure";
-const char AppcastEnclosure::kVersionXmlElementName[] = "version";
-const char AppcastEnclosure::kUrlXmlElementName[] = "url";
-const char AppcastEnclosure::kTypeXmlElementName[] = "type";
+
+class AppcastEnclosurePrivate
+{
+public:
+    QString version;
+    QUrl url;
+    QString type;
+};
+
 
 
 QString AppcastEnclosure::xmlName()
 {
-    return kXmlElementName;
+    return kRssEnclosureXmlName;
 }
 
 AppcastEnclosure::AppcastEnclosure(QObject *parent /* = 0 */)
     : QObject(parent),
-      mDepth(0)
+      d_ptr(new AppcastEnclosurePrivate())
 {
 }
 
 AppcastEnclosure::~AppcastEnclosure()
 {
+    if (d_ptr) {
+        delete d_ptr;
+        d_ptr = 0;
+    }
 }
 
 QString AppcastEnclosure::version() const
 {
-    return mVersion;
+    return d_ptr->version;
 }
 
 QUrl AppcastEnclosure::url() const
 {
-    return mUrl;
+    return d_ptr->url;
 }
 
 QString AppcastEnclosure::mimeType() const
 {
-    return mMimeType;
+    return d_ptr->type;
 }
 
 IXmlDeserializing *AppcastEnclosure::deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri,  const QXmlStreamAttributes & attributes)
@@ -47,8 +58,7 @@ IXmlDeserializing *AppcastEnclosure::deserializeXmlStartElement(XmlDeserializer 
     Q_UNUSED(name)
     Q_UNUSED(attributes)
     
-    mDepth++;
-    return this;
+    return 0;
 }
 
 void AppcastEnclosure::deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri)
@@ -56,23 +66,15 @@ void AppcastEnclosure::deserializeXmlEndElement(XmlDeserializer *deserializer, c
     Q_UNUSED(deserializer)
     Q_UNUSED(namespaceUri)
     Q_UNUSED(name)
-    
-    if (!mDepth) {
-        emit parsed();
-        return;
-    }
-    
-    mDepth--;
 }
 
 void AppcastEnclosure::deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes)
 {
     Q_UNUSED(deserializer)
-    Q_UNUSED(attributes)
     
-    mVersion = attributes.value(AppcastItem::kSparkleXmlNamespace, kVersionXmlElementName).toString();
-    mUrl = QUrl(attributes.value("", kUrlXmlElementName).toString());
-    mMimeType = attributes.value("", kTypeXmlElementName).toString();
+    d_ptr->version = attributes.value(kSparkleXmlNamespaceUri, kSparkleEnclosureVersionXmlAttr).toString();
+    d_ptr->url = QUrl(attributes.value(kRssEnclosureUrlXmlAttr).toString());
+    d_ptr->type = attributes.value(kRssEnclosureTypeXmlAttr).toString();
 }
 
 void AppcastEnclosure::deserializeXmlCharacters(XmlDeserializer *deserializer, const QStringRef & text)

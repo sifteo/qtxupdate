@@ -7,6 +7,7 @@ HEADERS += \
     $$PWD/appcastsysupdatefilter.h \
     $$PWD/appcastupdate.h \
     $$PWD/appcastupdatechecker.h \
+    $$PWD/appcastxmlns.h \
     $$PWD/semversortupdatefilter.h \
     $$PWD/semverversioncomparator.h \
     $$PWD/update.h \
@@ -22,6 +23,7 @@ SOURCES += \
     $$PWD/appcastsysupdatefilter.cpp \
     $$PWD/appcastupdate.cpp \
     $$PWD/appcastupdatechecker.cpp \
+    $$PWD/appcastxmlns.cpp \
     $$PWD/semversortupdatefilter.cpp \
     $$PWD/semverversioncomparator.cpp \
     $$PWD/update.cpp \
