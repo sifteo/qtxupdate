@@ -39,6 +39,23 @@ void tst_AppcastItem::readElement()
     QVERIFY(mItem->enclosure());
 }
 
+void tst_AppcastItem::readMinimumSystemVersion()
+{
+    QFile file("data/minimumSystemVersion.xml");
+    file.open(QIODevice::ReadOnly);
+    
+    mDeserializer->addData(file.readAll());
+    mDeserializer->parse();
+
+    QVERIFY(mItem);
+    QCOMPARE(mItem->title(), QString("Version 2.0 (2 bugs fixed; 3 new features)"));
+    QCOMPARE(mItem->version(), QString("2.0"));
+    QCOMPARE(mItem->linkUrl(), QUrl("http://you.com/app/index.html"));
+    QCOMPARE(mItem->minSystemVersion(), QString("10.6.0"));
+    
+    QVERIFY(mItem->enclosure());
+}
+
 IXmlDeserializing* tst_AppcastItem::deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes)
 {
     Q_UNUSED(deserializer)

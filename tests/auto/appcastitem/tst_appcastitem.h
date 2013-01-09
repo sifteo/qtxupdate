@@ -18,6 +18,7 @@ private slots:
     void cleanup();
     
     void readElement();
+    void readMinimumSystemVersion();
     
 protected:
     virtual IXmlDeserializing* deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes);
