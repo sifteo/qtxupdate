@@ -2,4 +2,5 @@ TEMPLATE = subdirs
 
 SUBDIRS += \
     appcastenclosure \
-    appcastitem
+    appcastitem \
+    appcastupdatechecker
