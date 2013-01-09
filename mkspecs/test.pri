@@ -1,8 +1,12 @@
 include(features/qtx_testcase.prf)
 
 
-INCLUDEPATH += ../../../src/update
+INCLUDEPATH += \
+    ../../../src/update \
+    ../../../../qtxxml/include
 
-LIBS += -L../../../lib
+LIBS += \
+    -L../../../lib \
+    -L../../../../qtxxml/lib
 
-LIBS += -lQtxUpdate
+LIBS += -lQtxUpdate -lQtxXml

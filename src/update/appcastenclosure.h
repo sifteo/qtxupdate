@@ -14,6 +14,9 @@ class AppcastEnclosure : public QObject,
     Q_OBJECT
     
 public:
+    static QString xmlName();
+    
+public:
     AppcastEnclosure(QObject *parent = 0);
     virtual ~AppcastEnclosure();
     

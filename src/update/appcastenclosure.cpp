@@ -9,6 +9,12 @@ const char AppcastEnclosure::kVersionXmlElementName[] = "version";
 const char AppcastEnclosure::kUrlXmlElementName[] = "url";
 const char AppcastEnclosure::kTypeXmlElementName[] = "type";
 
+
+QString AppcastEnclosure::xmlName()
+{
+    return kXmlElementName;
+}
+
 AppcastEnclosure::AppcastEnclosure(QObject *parent /* = 0 */)
     : QObject(parent),
       mDepth(0)
