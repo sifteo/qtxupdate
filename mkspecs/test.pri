@@ -5,10 +5,12 @@ QT += network
 
 INCLUDEPATH += \
     ../../../src/update \
-    ../../../../qtxxml/include
+    ../../../../qtxxml/include \
+    ../../../../qtxmocknetwork/include
 
 LIBS += \
     -L../../../lib \
-    -L../../../../qtxxml/lib
+    -L../../../../qtxxml/lib \
+    -L../../../../qtxmocknetwork/lib
 
-LIBS += -lQtxUpdate -lQtxXml
+LIBS += -lQtxUpdate -lQtxXml -lQtxMockNetwork

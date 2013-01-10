@@ -115,9 +115,9 @@ void AppcastUpdateChecker::onItemParsed()
 {
     mParsingItem->disconnect(this);
     
-    AppcastUpdate *update = new AppcastUpdate(mParsingItem, this);
-    mUpdates.append(update);
-    mParsingItem = 0;
+    //AppcastUpdate *update = new AppcastUpdate(mParsingItem, this);
+    //mUpdates.append(update);
+    //mParsingItem = 0;
 }
 
 IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes)
@@ -157,7 +157,7 @@ IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStartElement(XmlDeseriali
     
     if (/*kChannelXmlElementName == deserializer->parentName() &&*/ AppcastItem::xmlName() == name) {
         mParsingItem = new AppcastItem(this);
-        connect(mParsingItem, SIGNAL(parsed()), SLOT(onItemParsed()));
+        //connect(mParsingItem, SIGNAL(parsed()), SLOT(onItemParsed()));
         return mParsingItem;
     }
     
@@ -169,6 +169,12 @@ void AppcastUpdateChecker::deserializeXmlEndElement(XmlDeserializer *deserialize
     Q_UNUSED(deserializer)
     Q_UNUSED(name)
     Q_UNUSED(namespaceUri)
+    
+    if (/*kChannelXmlElementName == deserializer->parentName() &&*/ AppcastItem::xmlName() == name) {
+        AppcastUpdate *update = new AppcastUpdate(mParsingItem, this);
+        mUpdates.append(update);
+        mParsingItem = 0;
+    }
 }
 
 void AppcastUpdateChecker::deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes)
