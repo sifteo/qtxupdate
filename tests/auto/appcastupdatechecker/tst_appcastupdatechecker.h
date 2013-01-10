@@ -20,6 +20,9 @@ private slots:
     void cleanup();
     
     void sampleUpdates();
+    
+    void plainTextResponse();
+    
     void unconfiguredUrl();
     
 private:

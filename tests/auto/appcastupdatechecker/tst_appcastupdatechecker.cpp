@@ -53,6 +53,23 @@ void tst_AppcastUpdateChecker::sampleUpdates()
     QCOMPARE(mChecker->updates().at(2)->version(), QString("241"));
 }
 
+void tst_AppcastUpdateChecker::plainTextResponse()
+{
+    QSignalSpy finishedSpy(mChecker, SIGNAL(finished()));
+    QSignalSpy errorSpy(mChecker, SIGNAL(error(qint32)));
+    QList<QVariant> arguments;
+
+    mChecker->setUrl(QUrl("http://www.example.com/plain-text.txt"));
+    mChecker->check();
+    mEventLoop.exec();
+    
+    
+    QVERIFY(finishedSpy.count() == 0);
+    QVERIFY(errorSpy.count() == 1);
+    arguments = errorSpy.takeFirst();
+    QVERIFY(arguments.at(0).toInt() != 0);
+}
+
 void tst_AppcastUpdateChecker::unconfiguredUrl()
 {
     QSignalSpy finishedSpy(mChecker, SIGNAL(finished()));
@@ -76,6 +93,8 @@ QIODevice *tst_AppcastUpdateChecker::createIncomingData(const QNetworkRequest & 
     
     if ("/sample.xml" == path) {
         file = new QFile("data/sample.http");
+    } else if ("/plain-text.txt" == path) {
+        file = new QFile("data/plain-text.http");
     }
     
     if (file) {
