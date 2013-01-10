@@ -20,6 +20,7 @@ private slots:
     void cleanup();
     
     void sampleUpdates();
+    void sampleUpdatesWithUserAgent();
     
     void plainTextResponse();
     

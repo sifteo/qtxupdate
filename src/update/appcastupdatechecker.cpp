@@ -6,118 +6,117 @@
 QTX_BEGIN_NAMESPACE
 
 
-const char AppcastUpdateChecker::kChannelXmlElementName[] = "channel";
+class AppcastUpdateCheckerPrivate
+{
+public:
+    AppcastUpdateCheckerPrivate(AppcastUpdateChecker *q);
+    virtual ~AppcastUpdateCheckerPrivate();
+
+    void check();
+
+public:
+    AppcastUpdateChecker *q_ptr;
+    Q_DECLARE_PUBLIC(AppcastUpdateChecker);
+    
+    QNetworkAccessManager *netAccessManager;
+    QNetworkRequest request;
+    NetworkExchange *exchange;
+    XmlDeserializer *xmlDeserializer;
+    
+    QList<Update *> updates;
+    AppcastItem *parsingItem;
+};
+
 
 AppcastUpdateChecker::AppcastUpdateChecker(QObject *parent /* = 0 */)
-  : AbstractUpdateChecker(parent),
-    mExchange(0),
-    mXmlReader(0),
-    mParsingItem(0),
-    mAccessManager(0)
+    : AbstractUpdateChecker(parent),
+      d_ptr(new AppcastUpdateCheckerPrivate(this))
 {
 }
 
 AppcastUpdateChecker::~AppcastUpdateChecker()
 {
+    if (d_ptr) {
+        delete d_ptr;
+        d_ptr = 0;
+    }
 }
 
 void AppcastUpdateChecker::check()
 {
-    qDebug() << "AppcastUpdateChecker::check()";
-    
-    if (!mAccessManager) {
-        mAccessManager = new QNetworkAccessManager(this);
-    }
-    
-    QNetworkRequest request;
-    
-    if (!mRequest.url().isEmpty()) {
-        request = mRequest;
-    } else {
-        request = QNetworkRequest(mUrl);
-    }
-    request.setRawHeader("Accept", "application/rss+xml");
-    
-    mExchange = new NetworkExchange(request, this);
-    mExchange->setNetworkAccessManager(mAccessManager);
-    
-    connect(mExchange, SIGNAL(replyReceived()), SLOT(onReplyReceived()));
-    connect(mExchange, SIGNAL(readyRead()), SLOT(onReadyRead()));
-    connect(mExchange, SIGNAL(finished()), SLOT(onFinished()));
-    connect(mExchange, SIGNAL(error(quint32)), SLOT(onError(quint32)));
-    
-    mExchange->get();
+    Q_D(AppcastUpdateChecker);
+    d->check();
 }
 
 QList<Update *> AppcastUpdateChecker::updates()
 {
-    // NOTE: Does not apply version sorting.  Expects it to be implied by the order
-    //       of items in the feed.
-    
-    return mUpdates;
+    Q_D(AppcastUpdateChecker);
+    return d->updates;
 }
 
 void AppcastUpdateChecker::setUrl(const QUrl & url)
 {
-    mUrl = url;
+    Q_D(AppcastUpdateChecker);
+    d->request.setUrl(url);
 }
 
 void AppcastUpdateChecker::setRequest(const QNetworkRequest & request)
 {
-    mRequest = request;
+    Q_D(AppcastUpdateChecker);
+    d->request = request;
 }
 
 void AppcastUpdateChecker::setNetworkAccessManager(QNetworkAccessManager *manager)
 {
-    mAccessManager = manager;
+    Q_D(AppcastUpdateChecker);
+    d->netAccessManager = manager;
 }
 
 void AppcastUpdateChecker::onReplyReceived()
 {
-    if (mXmlReader) {
-        mXmlReader->setDelegate(0);
-        mXmlReader->deleteLater();
+    Q_D(AppcastUpdateChecker);
+
+    if (d->xmlDeserializer) {
+        d->xmlDeserializer->setDelegate(0);
+        d->xmlDeserializer->deleteLater();
     }
     
-    mXmlReader = new XmlDeserializer();
-    mXmlReader->setDelegate(this);
+    d->xmlDeserializer = new XmlDeserializer(this);
+    d->xmlDeserializer->setDelegate(this);
 }
 
 void AppcastUpdateChecker::onReadyRead()
 {
-    QByteArray data = mExchange->readAll();
-    qDebug() << "  data: " << data.data();
-    
-    mXmlReader->addData(data);
-    mXmlReader->parse();
+    Q_D(AppcastUpdateChecker);
+
+    QByteArray data = d->exchange->readAll();
+    d->xmlDeserializer->addData(data);
+    d->xmlDeserializer->parse();
 }
 
 void AppcastUpdateChecker::onFinished()
 {
-    mExchange->disconnect(this);
-    mExchange->deleteLater();
-    mExchange = 0;
+    Q_D(AppcastUpdateChecker);
+
+    if (d->xmlDeserializer) {
+        d->xmlDeserializer->setDelegate(0);
+        d->xmlDeserializer->deleteLater();
+    }
+
+    d->exchange->disconnect(this);
+    d->exchange->deleteLater();
+    d->exchange = 0;
 }
 
+// TODO: Switch to using qint32 codes (or QNetworkReply::NetworkError, in this case)
 void AppcastUpdateChecker::onError(quint32 code)
 {
     Q_UNUSED(code)
+    
+    Q_D(AppcastUpdateChecker);
  
-    //qDebug() << "AppcastUpdateChecker::onError";
-    //qDebug() << "   error: " << code;
-    //qDebug() << "   string: " << mExchange->errorString();
-    
-    setErrorString(mExchange->errorString());
+    setErrorString(d->exchange->errorString());
     emit error(-1);
-}
-
-void AppcastUpdateChecker::onItemParsed()
-{
-    mParsingItem->disconnect(this);
-    
-    //AppcastUpdate *update = new AppcastUpdate(mParsingItem, this);
-    //mUpdates.append(update);
-    //mParsingItem = 0;
 }
 
 IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes)
@@ -132,8 +131,6 @@ IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStart(XmlDeserializer *de
 
 void AppcastUpdateChecker::deserializeXmlEnd(XmlDeserializer *deserializer)
 {
-    //qDebug() << "AppcastUpdateChecker::xmlReadComplete()";
-    
     Q_UNUSED(deserializer)
     
     emit finished();
@@ -155,10 +152,11 @@ IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStartElement(XmlDeseriali
     Q_UNUSED(namespaceUri)
     Q_UNUSED(attributes)
     
-    if (/*kChannelXmlElementName == deserializer->parentName() &&*/ AppcastItem::xmlName() == name) {
-        mParsingItem = new AppcastItem(this);
-        //connect(mParsingItem, SIGNAL(parsed()), SLOT(onItemParsed()));
-        return mParsingItem;
+    Q_D(AppcastUpdateChecker);
+    
+    if (AppcastItem::xmlName() == name) {
+        d->parsingItem = new AppcastItem(this);
+        return d->parsingItem;
     }
     
     return this;
@@ -170,10 +168,12 @@ void AppcastUpdateChecker::deserializeXmlEndElement(XmlDeserializer *deserialize
     Q_UNUSED(name)
     Q_UNUSED(namespaceUri)
     
-    if (/*kChannelXmlElementName == deserializer->parentName() &&*/ AppcastItem::xmlName() == name) {
-        AppcastUpdate *update = new AppcastUpdate(mParsingItem, this);
-        mUpdates.append(update);
-        mParsingItem = 0;
+    Q_D(AppcastUpdateChecker);
+    
+    if (AppcastItem::xmlName() == name) {
+        AppcastUpdate *update = new AppcastUpdate(d->parsingItem, this);
+        d->updates.append(update);
+        d->parsingItem = 0;
     }
 }
 
@@ -187,6 +187,40 @@ void AppcastUpdateChecker::deserializeXmlCharacters(XmlDeserializer *deserialize
 {
     Q_UNUSED(deserializer)
     Q_UNUSED(text)
+}
+
+
+AppcastUpdateCheckerPrivate::AppcastUpdateCheckerPrivate(AppcastUpdateChecker *q)
+    : q_ptr(q),
+      exchange(0),
+      xmlDeserializer(0),
+      parsingItem(0),
+      netAccessManager(0)
+{
+}
+
+AppcastUpdateCheckerPrivate::~AppcastUpdateCheckerPrivate()
+{
+}
+
+void AppcastUpdateCheckerPrivate::check()
+{
+    Q_Q(AppcastUpdateChecker);
+    
+    if (!netAccessManager) {
+        netAccessManager = new QNetworkAccessManager(q);
+    }
+    
+    request.setRawHeader("Accept", "application/rss+xml");
+    exchange = new NetworkExchange(request, q);
+    exchange->setNetworkAccessManager(netAccessManager);
+    
+    q->connect(exchange, SIGNAL(replyReceived()), SLOT(onReplyReceived()));
+    q->connect(exchange, SIGNAL(readyRead()), SLOT(onReadyRead()));
+    q->connect(exchange, SIGNAL(finished()), SLOT(onFinished()));
+    q->connect(exchange, SIGNAL(error(quint32)), SLOT(onError(quint32)));
+    
+    exchange->get();
 }
 
 

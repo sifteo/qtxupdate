@@ -8,6 +8,7 @@ QTX_BEGIN_NAMESPACE
 
 
 class Update;
+class AbstractUpdateCheckerPrivate;
 
 class AbstractUpdateChecker : public QObject
 {
@@ -18,7 +19,6 @@ public:
     virtual ~AbstractUpdateChecker();
     
     virtual void check() = 0;
-    
     virtual QList<Update *> updates() = 0;
     
     QString errorString() const;
@@ -30,8 +30,10 @@ signals:
 protected:
     void setErrorString(const QString & str);
 
+protected:
+    AbstractUpdateCheckerPrivate *d_ptr;
 private:
-    QString mErrorString;
+    Q_DECLARE_PRIVATE(AbstractUpdateChecker);
 };
 
 
