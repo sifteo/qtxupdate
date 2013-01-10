@@ -142,7 +142,7 @@ void AppcastUpdateChecker::deserializeXmlError(XmlDeserializer *deserializer, co
     Q_UNUSED(err)
     Q_UNUSED(errorString)
     
-    setErrorString("invalid appcast XML");
+    setErrorString("Failed to parse appcast XML document.");
     emit error(-1);
 }
 
@@ -192,10 +192,10 @@ void AppcastUpdateChecker::deserializeXmlCharacters(XmlDeserializer *deserialize
 
 AppcastUpdateCheckerPrivate::AppcastUpdateCheckerPrivate(AppcastUpdateChecker *q)
     : q_ptr(q),
+      netAccessManager(0),
       exchange(0),
       xmlDeserializer(0),
-      parsingItem(0),
-      netAccessManager(0)
+      parsingItem(0)
 {
 }
 
