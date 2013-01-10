@@ -15,8 +15,17 @@ private slots:
     void init();
     void cleanup();
     
+    void unconfiguredUrl();
+    
 private:
-    //AppcastUpdateChecker *mChecker;
+    QEventLoop mEventLoop;
+    //MockNetworkAccessManager* _netAccessManager;
+    AppcastUpdateChecker *mChecker;
+    
+public slots:
+    void onFinished();
+    void onError(qint32 code);
+    void onTimeout();
 };
 
 #endif // TST_APPCASTUPDATECHECKER_H
