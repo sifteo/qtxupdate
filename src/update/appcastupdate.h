@@ -9,6 +9,7 @@ QTX_BEGIN_NAMESPACE
 
 
 class AppcastItem;
+class AppcastUpdatePrivate;
 
 class AppcastUpdate : public Update
 {
@@ -18,7 +19,7 @@ public:
     AppcastUpdate(AppcastItem *item, QObject *parent = 0);
     ~AppcastUpdate();
     
-    QString name() const;
+    QString title() const;
     QString version() const;
     QUrl linkUrl() const;
     QUrl packageUrl() const;
@@ -26,8 +27,10 @@ public:
     
     QString minSystemVersion() const;
     
+protected:
+    AppcastUpdatePrivate *d_ptr;
 private:
-    AppcastItem *mItem;
+    Q_DECLARE_PRIVATE(AppcastUpdate);
 };
 
 

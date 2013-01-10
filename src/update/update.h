@@ -15,7 +15,7 @@ public:
     Update(QObject *parent = 0);
     virtual ~Update();
     
-    virtual QString name() const = 0;
+    virtual QString title() const = 0;
     virtual QString version() const = 0;
     virtual QUrl linkUrl() const = 0;
     virtual QUrl packageUrl() const = 0;

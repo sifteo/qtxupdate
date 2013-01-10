@@ -5,51 +5,66 @@
 QTX_BEGIN_NAMESPACE
 
 
-AppcastUpdate::AppcastUpdate(AppcastItem *item, QObject *parent /* = 0 */)
-  : Update(parent),
-    mItem(item)
+class AppcastUpdatePrivate
 {
-    mItem->setParent(this);
+public:
+    AppcastUpdatePrivate();
+    ~AppcastUpdatePrivate();
+    
+    AppcastItem *item;
+};
+
+
+AppcastUpdate::AppcastUpdate(AppcastItem *item, QObject *parent /* = 0 */)
+    : Update(parent),
+      d_ptr(new AppcastUpdatePrivate())
+{
+    item->setParent(this);
+    d_ptr->item = item;
 }
 
 AppcastUpdate::~AppcastUpdate()
 {
+    if (d_ptr) {
+        delete d_ptr;
+        d_ptr = 0;
+    }
 }
 
-QString AppcastUpdate::name() const
+QString AppcastUpdate::title() const
 {
-    if (!mItem) {
+    if (!d_ptr->item) {
         return "";
     }
     
-    return mItem->title();
+    return d_ptr->item->title();
 }
 
 QString AppcastUpdate::version() const
 {
-    if (!mItem) {
+    if (!d_ptr->item) {
         return "";
     }
     
-    return mItem->version();
+    return d_ptr->item->version();
 }
 
 QUrl AppcastUpdate::linkUrl() const
 {
-    if (!mItem) {
+    if (!d_ptr->item) {
         return QUrl();
     }
     
-    return mItem->linkUrl();
+    return d_ptr->item->linkUrl();
 }
 
 QUrl AppcastUpdate::packageUrl() const
 {
-    if (!mItem) {
+    if (!d_ptr->item) {
         return QUrl();
     }
     
-    const AppcastEnclosure *enclosure = mItem->enclosure();
+    const AppcastEnclosure *enclosure = d_ptr->item->enclosure();
     if (!enclosure) {
         return QUrl();
     }
@@ -58,11 +73,11 @@ QUrl AppcastUpdate::packageUrl() const
 
 QString AppcastUpdate::mimeType() const
 {
-    if (!mItem) {
+    if (!d_ptr->item) {
         return "";
     }
     
-    const AppcastEnclosure *enclosure = mItem->enclosure();
+    const AppcastEnclosure *enclosure = d_ptr->item->enclosure();
     if (!enclosure) {
         return "";
     }
@@ -71,11 +86,21 @@ QString AppcastUpdate::mimeType() const
 
 QString AppcastUpdate::minSystemVersion() const
 {
-    if (!mItem) {
+    if (!d_ptr->item) {
         return "";
     }
     
-    return mItem->minSystemVersion();
+    return d_ptr->item->minSystemVersion();
+}
+
+
+AppcastUpdatePrivate::AppcastUpdatePrivate()
+    : item(0)
+{
+}
+
+AppcastUpdatePrivate::~AppcastUpdatePrivate()
+{
 }
 
 
