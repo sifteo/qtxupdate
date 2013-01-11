@@ -1,5 +1,5 @@
-#ifndef UPDATE_H
-#define UPDATE_H
+#ifndef QTXUPDATE_UPDATE_H
+#define QTXUPDATE_UPDATE_H
 
 #include "updateglobal.h"
 #include <QtCore>
@@ -25,4 +25,4 @@ public:
 
 QTX_END_NAMESPACE
 
-#endif // UPDATE_H
+#endif // QTXUPDATE_UPDATE_H

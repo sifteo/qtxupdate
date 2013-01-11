@@ -1,5 +1,5 @@
-#ifndef APPCASTUPDATECHECKER_H
-#define APPCASTUPDATECHECKER_H
+#ifndef QTXUPDATE_APPCASTUPDATECHECKER_H
+#define QTXUPDATE_APPCASTUPDATECHECKER_H
 
 #include "updateglobal.h"
 #include "abstractupdatechecker.h"
@@ -54,4 +54,4 @@ private:
 
 QTX_END_NAMESPACE
 
-#endif // APPCASTUPDATECHECKER_H
+#endif // QTXUPDATE_APPCASTUPDATECHECKER_H

@@ -1,5 +1,5 @@
-#ifndef APPCASTUPDATE_H
-#define APPCASTUPDATE_H
+#ifndef QTXUPDATE_APPCASTUPDATE_H
+#define QTXUPDATE_APPCASTUPDATE_H
 
 #include "updateglobal.h"
 #include "update.h"
@@ -36,4 +36,4 @@ private:
 
 QTX_END_NAMESPACE
 
-#endif // APPCASTUPDATE_H
+#endif // QTXUPDATE_APPCASTUPDATE_H
