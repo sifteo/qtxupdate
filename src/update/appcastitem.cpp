@@ -82,7 +82,7 @@ QString AppcastItem::minSystemVersion() const
     return d_ptr->minSystemVersion;
 }
 
-IXmlDeserializing *AppcastItem::deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes)
+IXmlDeserializing *AppcastItem::deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes)
 {
     Q_UNUSED(deserializer)
     Q_UNUSED(namespaceUri)
@@ -97,7 +97,7 @@ IXmlDeserializing *AppcastItem::deserializeXmlStartElement(XmlDeserializer *dese
     return this;
 }
 
-void AppcastItem::deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri)
+void AppcastItem::deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & namespaceUri, const QStringRef & name)
 {
     Q_UNUSED(deserializer)
     
@@ -110,12 +110,6 @@ void AppcastItem::deserializeXmlEndElement(XmlDeserializer *deserializer, const 
     }
     
     d_ptr->characters.clear();
-}
-
-void AppcastItem::deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes)
-{
-    Q_UNUSED(deserializer)
-    Q_UNUSED(attributes)
 }
 
 void AppcastItem::deserializeXmlCharacters(XmlDeserializer *deserializer, const QStringRef & text)

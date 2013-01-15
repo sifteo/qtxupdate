@@ -56,7 +56,7 @@ void tst_AppcastItem::readMinimumSystemVersion()
     QVERIFY(mItem->enclosure());
 }
 
-IXmlDeserializing* tst_AppcastItem::deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes)
+IXmlDeserializing* tst_AppcastItem::deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes)
 {
     Q_UNUSED(deserializer)
     Q_UNUSED(namespaceUri)

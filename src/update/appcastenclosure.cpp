@@ -51,23 +51,6 @@ QString AppcastEnclosure::mimeType() const
     return d_ptr->type;
 }
 
-IXmlDeserializing *AppcastEnclosure::deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri,  const QXmlStreamAttributes & attributes)
-{
-    Q_UNUSED(deserializer)
-    Q_UNUSED(namespaceUri)
-    Q_UNUSED(name)
-    Q_UNUSED(attributes)
-    
-    return 0;
-}
-
-void AppcastEnclosure::deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri)
-{
-    Q_UNUSED(deserializer)
-    Q_UNUSED(namespaceUri)
-    Q_UNUSED(name)
-}
-
 void AppcastEnclosure::deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes)
 {
     Q_UNUSED(deserializer)
@@ -75,12 +58,6 @@ void AppcastEnclosure::deserializeXmlAttributes(XmlDeserializer *deserializer, c
     d_ptr->version = attributes.value(kSparkleXmlNamespaceUri, kSparkleEnclosureVersionXmlAttr).toString();
     d_ptr->url = QUrl(attributes.value(kRssEnclosureUrlXmlAttr).toString());
     d_ptr->type = attributes.value(kRssEnclosureTypeXmlAttr).toString();
-}
-
-void AppcastEnclosure::deserializeXmlCharacters(XmlDeserializer *deserializer, const QStringRef & text)
-{
-    Q_UNUSED(deserializer)
-    Q_UNUSED(text)
 }
 
 

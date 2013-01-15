@@ -27,10 +27,7 @@ public:
     QString mimeType() const;
     
     
-    IXmlDeserializing *deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes);
-    void deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri);	
     void deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes);
-    void deserializeXmlCharacters(XmlDeserializer *deserializer, const QStringRef & text);
     
 protected:
     AppcastEnclosurePrivate *d_ptr;

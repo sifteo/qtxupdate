@@ -119,11 +119,11 @@ void AppcastUpdateChecker::onError(quint32 code)
     emit error(-1);
 }
 
-IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri, const QXmlStreamAttributes & attributes)
+IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes)
 {
     Q_UNUSED(deserializer)
-    Q_UNUSED(name)
     Q_UNUSED(namespaceUri)
+    Q_UNUSED(name)
     Q_UNUSED(attributes)
     
     return this;
@@ -146,7 +146,7 @@ void AppcastUpdateChecker::deserializeXmlError(XmlDeserializer *deserializer, co
     emit error(-1);
 }
 
-IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri,  const QXmlStreamAttributes & attributes)
+IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes)
 {
     Q_UNUSED(deserializer)
     Q_UNUSED(namespaceUri)
@@ -162,11 +162,11 @@ IXmlDeserializing *AppcastUpdateChecker::deserializeXmlStartElement(XmlDeseriali
     return this;
 }
 
-void AppcastUpdateChecker::deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & name, const QStringRef & namespaceUri)
+void AppcastUpdateChecker::deserializeXmlEndElement(XmlDeserializer *deserializer, const QStringRef & namespaceUri, const QStringRef & name)
 {
     Q_UNUSED(deserializer)
-    Q_UNUSED(name)
     Q_UNUSED(namespaceUri)
+    Q_UNUSED(name)
     
     Q_D(AppcastUpdateChecker);
     
