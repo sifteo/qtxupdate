@@ -108,8 +108,7 @@ void AppcastUpdateChecker::onFinished()
     d->exchange = 0;
 }
 
-// TODO: Switch to using qint32 codes (or QNetworkReply::NetworkError, in this case)
-void AppcastUpdateChecker::onError(quint32 code)
+void AppcastUpdateChecker::onError(QNetworkReply::NetworkError code)
 {
     Q_UNUSED(code)
     
@@ -218,7 +217,7 @@ void AppcastUpdateCheckerPrivate::check()
     q->connect(exchange, SIGNAL(replyReceived()), SLOT(onReplyReceived()));
     q->connect(exchange, SIGNAL(readyRead()), SLOT(onReadyRead()));
     q->connect(exchange, SIGNAL(finished()), SLOT(onFinished()));
-    q->connect(exchange, SIGNAL(error(quint32)), SLOT(onError(quint32)));
+    q->connect(exchange, SIGNAL(error(QNetworkReply::NetworkError)), SLOT(onError(QNetworkReply::NetworkError)));
     
     exchange->get();
 }

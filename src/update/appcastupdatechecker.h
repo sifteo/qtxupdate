@@ -33,7 +33,7 @@ private slots:
     void onReplyReceived();
     void onReadyRead();
     void onFinished();
-    void onError(quint32 code);
+    void onError(QNetworkReply::NetworkError code);
 
 private:
     IXmlDeserializing *deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes);
