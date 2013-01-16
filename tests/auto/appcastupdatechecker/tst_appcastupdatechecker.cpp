@@ -107,8 +107,10 @@ void tst_AppcastUpdateChecker::unconfiguredUrl()
     QVERIFY(arguments.at(0).toInt() != 0);
 }
 
-QIODevice *tst_AppcastUpdateChecker::createIncomingData(const QNetworkRequest & req)
+QIODevice *tst_AppcastUpdateChecker::createIncomingData(const QNetworkRequest & req, QIODevice * outgoingData /* = 0 */)
 {
+    Q_UNUSED(outgoingData)
+
     QString path = req.url().path();
     QFile *file = 0;
     

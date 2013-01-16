@@ -32,7 +32,7 @@ private:
     AppcastUpdateChecker *mChecker;
     
 public:
-    QIODevice *createIncomingData(const QNetworkRequest & req);
+    QIODevice *createIncomingData(const QNetworkRequest & req, QIODevice * outgoingData = 0);
     
 public slots:
     void onFinished();
