@@ -3,11 +3,12 @@
 
 #include "updateglobal.h"
 #include "abstractupdatefilter.h"
-#include <QtxVersion>
 #include <QtCore>
 
 QTX_BEGIN_NAMESPACE
 
+
+class AppcastMinSystemUpdateFilterPrivate;
 
 class AppcastMinSystemUpdateFilter : public AbstractUpdateFilter
 {
@@ -15,12 +16,15 @@ class AppcastMinSystemUpdateFilter : public AbstractUpdateFilter
     
 public:
     AppcastMinSystemUpdateFilter(QObject *parent = 0);
+    AppcastMinSystemUpdateFilter(const QString & systemVersion, QObject *parent = 0);
     ~AppcastMinSystemUpdateFilter();
     
     QList<Update *> filter(const QList<Update *> candidates);
     
+protected:
+    AppcastMinSystemUpdateFilterPrivate *d_ptr;
 private:
-    static Version sysVersion();
+    Q_DECLARE_PRIVATE(AppcastMinSystemUpdateFilter);
 };
 
 

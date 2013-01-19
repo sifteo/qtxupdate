@@ -1,12 +1,31 @@
 #include "appcastminsystemupdatefilter.h"
 #include "appcastupdate.h"
+#include <QtxVersion>
 
 QTX_BEGIN_NAMESPACE
 
 
-AppcastMinSystemUpdateFilter::AppcastMinSystemUpdateFilter(QObject *parent /* = 0 */)
-    : AbstractUpdateFilter(parent)
+class AppcastMinSystemUpdateFilterPrivate
 {
+public:
+    static Version sysVersion();
+    
+    Version systemVersion;
+};
+
+
+AppcastMinSystemUpdateFilter::AppcastMinSystemUpdateFilter(QObject *parent /* = 0 */)
+    : AbstractUpdateFilter(parent),
+      d_ptr(new AppcastMinSystemUpdateFilterPrivate())
+{
+    d_ptr->systemVersion = AppcastMinSystemUpdateFilterPrivate::sysVersion();
+}
+
+AppcastMinSystemUpdateFilter::AppcastMinSystemUpdateFilter(const QString & systemVersion, QObject *parent /* = 0 */)
+    : AbstractUpdateFilter(parent),
+      d_ptr(new AppcastMinSystemUpdateFilterPrivate())
+{
+    d_ptr->systemVersion = Version(systemVersion);
 }
 
 AppcastMinSystemUpdateFilter::~AppcastMinSystemUpdateFilter()
@@ -19,7 +38,7 @@ QList<Update *> AppcastMinSystemUpdateFilter::filter(const QList<Update *> candi
     foreach (Update *candidate, candidates) {
         AppcastUpdate *update = qobject_cast<AppcastUpdate *>(candidate);
         if (update) {
-            Version systemVersion = sysVersion();
+            Version systemVersion = d_ptr->systemVersion;
             Version minSystemVersion(update->minSystemVersion());
             
             if (!systemVersion.isValid()) {
@@ -27,27 +46,31 @@ QList<Update *> AppcastMinSystemUpdateFilter::filter(const QList<Update *> candi
                 // what was available at the time the application was built.
                 // Assume compatiblity until proven otherwise.
                 filtered.append(candidate);
+                continue;
             }
             if (!minSystemVersion.isValid()) {
                 // The minimum version was not specified, which means any
                 // version is acceptable.
                 filtered.append(candidate);
+                continue;
             }
             
             if (systemVersion >= minSystemVersion) {
                 filtered.append(candidate);
+                continue;
             }
         } else {
             // This is not a type understood by this filter.  Let it through so
             // other filters in the chain get a chance to handle it.
             filtered.append(candidate);
+            continue;
         }
     }
     
     return filtered;
 }
 
-Version AppcastMinSystemUpdateFilter::sysVersion()
+Version AppcastMinSystemUpdateFilterPrivate::sysVersion()
 {
 #if defined Q_OS_WIN
     switch (QSysInfo::WindowsVersion) {
