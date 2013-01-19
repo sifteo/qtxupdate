@@ -5,7 +5,7 @@
 #include "../src/update/abstractupdatechecker.h"
 #include "../src/update/abstractupdatefilter.h"
 #include "../src/update/abstractversioncomparator.h"
-#include "../src/update/appcastsysupdatefilter.h"
+#include "../src/update/appcastminsystemupdatefilter.h"
 #include "../src/update/appcastupdatechecker.h"
 #include "../src/update/semversortupdatefilter.h"
 #include "../src/update/semverversioncomparator.h"

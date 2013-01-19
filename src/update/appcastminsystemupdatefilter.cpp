@@ -1,19 +1,19 @@
-#include "appcastsysupdatefilter.h"
+#include "appcastminsystemupdatefilter.h"
 #include "appcastupdate.h"
 
 QTX_BEGIN_NAMESPACE
 
 
-AppcastSysUpdateFilter::AppcastSysUpdateFilter(QObject *parent /* = 0 */)
-  : AbstractUpdateFilter(parent)
+AppcastMinSystemUpdateFilter::AppcastMinSystemUpdateFilter(QObject *parent /* = 0 */)
+    : AbstractUpdateFilter(parent)
 {
 }
 
-AppcastSysUpdateFilter::~AppcastSysUpdateFilter()
+AppcastMinSystemUpdateFilter::~AppcastMinSystemUpdateFilter()
 {
 }
 
-QList<Update *> AppcastSysUpdateFilter::filter(const QList<Update *> candidates)
+QList<Update *> AppcastMinSystemUpdateFilter::filter(const QList<Update *> candidates)
 {
     QList<Update *> filtered;
     foreach (Update *candidate, candidates) {
@@ -47,7 +47,7 @@ QList<Update *> AppcastSysUpdateFilter::filter(const QList<Update *> candidates)
     return filtered;
 }
 
-Version AppcastSysUpdateFilter::sysVersion()
+Version AppcastMinSystemUpdateFilter::sysVersion()
 {
 #if defined Q_OS_WIN
     switch (QSysInfo::WindowsVersion) {

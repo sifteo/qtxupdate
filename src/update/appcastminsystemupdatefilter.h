@@ -1,5 +1,5 @@
-#ifndef APPCASTSYSUPDATEFILTER_H
-#define APPCASTSYSUPDATEFILTER_H
+#ifndef QTXUPDATE_APPCASTMINSYSTEMUPDATEFILTER_H
+#define QTXUPDATE_APPCASTMINSYSTEMUPDATEFILTER_H
 
 #include "updateglobal.h"
 #include "abstractupdatefilter.h"
@@ -9,13 +9,13 @@
 QTX_BEGIN_NAMESPACE
 
 
-class AppcastSysUpdateFilter : public AbstractUpdateFilter
+class AppcastMinSystemUpdateFilter : public AbstractUpdateFilter
 {
     Q_OBJECT
     
 public:
-    AppcastSysUpdateFilter(QObject *parent = 0);
-    ~AppcastSysUpdateFilter();
+    AppcastMinSystemUpdateFilter(QObject *parent = 0);
+    ~AppcastMinSystemUpdateFilter();
     
     QList<Update *> filter(const QList<Update *> candidates);
     
@@ -26,4 +26,4 @@ private:
 
 QTX_END_NAMESPACE
 
-#endif // APPCASTSYSUPDATEFILTER_H
+#endif // QTXUPDATE_APPCASTMINSYSTEMUPDATEFILTER_H
