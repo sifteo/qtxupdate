@@ -4,4 +4,5 @@ SUBDIRS += \
     appcastenclosure \
     appcastitem \
     appcastminsystemupdatefilter \
-    appcastupdatechecker
+    appcastupdatechecker \
+    semversortupdatefilter

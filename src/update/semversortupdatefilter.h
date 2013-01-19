@@ -1,5 +1,5 @@
-#ifndef SEMVERSORTUPDATEFILTER_H
-#define SEMVERSORTUPDATEFILTER_H
+#ifndef QTXUPDATE_SEMVERSORTUPDATEFILTER_H
+#define QTXUPDATE_SEMVERSORTUPDATEFILTER_H
 
 #include "updateglobal.h"
 #include "abstractupdatefilter.h"
@@ -17,12 +17,9 @@ public:
     ~SemVerSortUpdateFilter();
     
     QList<Update *> filter(const QList<Update *> candidates);
-    
-    static bool lessThan(const Update *u1, const Update *u2);
-    static bool greaterThan(const Update *u1, const Update *u2);
 };
 
 
 QTX_END_NAMESPACE
 
-#endif // SEMVERSORTUPDATEFILTER_H
+#endif // QTXUPDATE_SEMVERSORTUPDATEFILTER_H
