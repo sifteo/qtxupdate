@@ -1,5 +1,6 @@
 #include "tst_updateresolver.h"
 #include "../../mock/src/mockupdatechecker.h"
+#include "../../mock/src/mockfailingupdatechecker.h"
 #include "../../mock/src/mockupdate.h"
 #include "../../mock/src/versionlimitupdatefilter.h"
 
@@ -70,6 +71,25 @@ void tst_UpdateResolver::resolveNoUpdateTest()
     QVERIFY(errorSpy.count() == 0);
     
     delete checker;
+}
+
+void tst_UpdateResolver::resolveErrorTest()
+{
+    MockFailingUpdateChecker *checker = new MockFailingUpdateChecker();
+    mResolver->setUpdateChecker(checker);
+
+    QSignalSpy updateAvailableSpy(mResolver, SIGNAL(updateAvailable(Update *)));
+    QSignalSpy noUpdateAvailableSpy(mResolver, SIGNAL(noUpdateAvailable()));
+    QSignalSpy errorSpy(mResolver, SIGNAL(error(UpdateResolver::Error)));
+    
+    mResolver->resolve("1.6");
+    
+    QVERIFY(updateAvailableSpy.count() == 0);
+    QVERIFY(noUpdateAvailableSpy.count() == 0);
+    QVERIFY(errorSpy.count() == 1);
+    
+    QList<QVariant> arguments = errorSpy.takeFirst();
+    QVERIFY(arguments.at(0).toInt() == UpdateResolver::UnknownCheckError);
 }
 
 void tst_UpdateResolver::resolveInvalidCheckerError()

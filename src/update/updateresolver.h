@@ -20,6 +20,7 @@ public:
     typedef enum {
         NoError             = 0,
         InvalidCheckerError = 1,
+        UnknownCheckError   = 2
     } Error;
     
 public:

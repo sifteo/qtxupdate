@@ -18,6 +18,7 @@ private slots:
     
     void resolveTest();
     void resolveNoUpdateTest();
+    void resolveErrorTest();
     void resolveInvalidCheckerError();
 
     void updateFromTest();

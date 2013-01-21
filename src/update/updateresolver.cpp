@@ -113,7 +113,7 @@ void UpdateResolver::setVersionComparator(AbstractVersionComparator *comparator)
 
 void UpdateResolver::onCheckerFinished()
 {
-    qDebug() << "UpdateResolver::onCheckerFinished";
+    mChecker->disconnect(this);
     
     Update *update = updateFrom(mVersion);
     if (update) {
@@ -125,8 +125,9 @@ void UpdateResolver::onCheckerFinished()
 
 void UpdateResolver::onCheckerError(qint32 code)
 {
-    qDebug() << "UpdateResolver::onCheckerError";
-    qDebug() << "  code: " << code;
+    mChecker->disconnect(this);
+    
+    emit error(UnknownCheckError);
 }
 
 
