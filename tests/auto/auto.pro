@@ -6,4 +6,5 @@ SUBDIRS += \
     appcastminsysupdatefilter \
     appcastupdatechecker \
     semversortupdatefilter \
-    semverversioncomparator
+    semverversioncomparator \
+    updateresolver

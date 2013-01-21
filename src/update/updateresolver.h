@@ -18,7 +18,7 @@ class UpdateResolver : public QObject
     
 public:
     typedef enum {
-        UnknownError        = 0,
+        NoError             = 0,
         InvalidCheckerError = 1,
     } Error;
     

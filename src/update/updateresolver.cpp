@@ -40,21 +40,13 @@ void UpdateResolver::resolve(const QString & version)
 
 Update *UpdateResolver::updateFrom(const QString & version)
 {
-    /*
-     * If for some reason, we have failed to retrieve a proper version string
-     * for the entity we're considering updating, decline the update.
-     *
-     * This change was specifically introduced to avoid prompting for an update
-     * of the launcher or base firmware on Windows, in which we're currently
-     * subject to a Qt bug in QProcess preventing us from capturing info
-     * about the base from swiss.
-     */
-
     if (version.isEmpty()) {
         return 0;
     }
-
-    if (!mChecker) { return 0; }
+    if (!mChecker) { 
+        return 0;
+    }
+    
     if (!mComparator) {
         mComparator = new SemVerVersionComparator(this);
     }
