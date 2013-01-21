@@ -1,14 +1,14 @@
-#include "tst_appcastminsystemupdatefilter.h"
+#include "tst_appcastminsysupdatefilter.h"
 #include "update.h"
 
 
-void tst_AppcastMinSystemUpdateFilter::initTestCase()
+void tst_AppcastMinSysUpdateFilter::initTestCase()
 {
     mNetAccessManager = new MockNetworkAccessManager();
     mNetAccessManager->setDelegate(this);
 }
 
-void tst_AppcastMinSystemUpdateFilter::cleanupTestCase()
+void tst_AppcastMinSysUpdateFilter::cleanupTestCase()
 {
     if (mNetAccessManager) {
         delete mNetAccessManager;
@@ -16,7 +16,7 @@ void tst_AppcastMinSystemUpdateFilter::cleanupTestCase()
     }
 }
 
-void tst_AppcastMinSystemUpdateFilter::init()
+void tst_AppcastMinSysUpdateFilter::init()
 {
     mChecker = new AppcastUpdateChecker();
     mChecker->setNetworkAccessManager(mNetAccessManager);
@@ -26,7 +26,7 @@ void tst_AppcastMinSystemUpdateFilter::init()
     QTimer::singleShot(10000, this, SLOT(onTimeout()));
 }
 
-void tst_AppcastMinSystemUpdateFilter::cleanup()
+void tst_AppcastMinSysUpdateFilter::cleanup()
 {
     if (mChecker) {
         delete mChecker;
@@ -34,7 +34,7 @@ void tst_AppcastMinSystemUpdateFilter::cleanup()
     }
 }
 
-void tst_AppcastMinSystemUpdateFilter::allSystemsPass()
+void tst_AppcastMinSysUpdateFilter::allSystemsPass()
 {
     QSignalSpy finishedSpy(mChecker, SIGNAL(finished()));
     QSignalSpy errorSpy(mChecker, SIGNAL(error(qint32)));
@@ -44,7 +44,7 @@ void tst_AppcastMinSystemUpdateFilter::allSystemsPass()
     mChecker->check();
     mEventLoop.exec();
     
-    AppcastMinSystemUpdateFilter filter("");
+    AppcastMinSysUpdateFilter filter("");
     QList<Update *> updates = filter.filter(mChecker->updates());
     
     QCOMPARE(updates.count(), 3);
@@ -53,7 +53,7 @@ void tst_AppcastMinSystemUpdateFilter::allSystemsPass()
     QCOMPARE(updates.at(2)->version(), QString("241"));
 }
 
-void tst_AppcastMinSystemUpdateFilter::only10_7orEarlierPass()
+void tst_AppcastMinSysUpdateFilter::only10_7orEarlierPass()
 {
     QSignalSpy finishedSpy(mChecker, SIGNAL(finished()));
     QSignalSpy errorSpy(mChecker, SIGNAL(error(qint32)));
@@ -63,7 +63,7 @@ void tst_AppcastMinSystemUpdateFilter::only10_7orEarlierPass()
     mChecker->check();
     mEventLoop.exec();
     
-    AppcastMinSystemUpdateFilter filter("10.7");
+    AppcastMinSysUpdateFilter filter("10.7");
     QList<Update *> updates = filter.filter(mChecker->updates());
     
     QCOMPARE(updates.count(), 3);
@@ -72,7 +72,7 @@ void tst_AppcastMinSystemUpdateFilter::only10_7orEarlierPass()
     QCOMPARE(updates.at(2)->version(), QString("241"));
 }
 
-void tst_AppcastMinSystemUpdateFilter::only10_6orEarlierPass()
+void tst_AppcastMinSysUpdateFilter::only10_6orEarlierPass()
 {
     QSignalSpy finishedSpy(mChecker, SIGNAL(finished()));
     QSignalSpy errorSpy(mChecker, SIGNAL(error(qint32)));
@@ -82,7 +82,7 @@ void tst_AppcastMinSystemUpdateFilter::only10_6orEarlierPass()
     mChecker->check();
     mEventLoop.exec();
     
-    AppcastMinSystemUpdateFilter filter("10.6");
+    AppcastMinSysUpdateFilter filter("10.6");
     QList<Update *> updates = filter.filter(mChecker->updates());
     
     QCOMPARE(updates.count(), 3);
@@ -91,7 +91,7 @@ void tst_AppcastMinSystemUpdateFilter::only10_6orEarlierPass()
     QCOMPARE(updates.at(2)->version(), QString("241"));
 }
 
-void tst_AppcastMinSystemUpdateFilter::only10_5orEarlierPass()
+void tst_AppcastMinSysUpdateFilter::only10_5orEarlierPass()
 {
     QSignalSpy finishedSpy(mChecker, SIGNAL(finished()));
     QSignalSpy errorSpy(mChecker, SIGNAL(error(qint32)));
@@ -101,7 +101,7 @@ void tst_AppcastMinSystemUpdateFilter::only10_5orEarlierPass()
     mChecker->check();
     mEventLoop.exec();
     
-    AppcastMinSystemUpdateFilter filter("10.5");
+    AppcastMinSysUpdateFilter filter("10.5");
     QList<Update *> updates = filter.filter(mChecker->updates());
     
     QCOMPARE(updates.count(), 2);
@@ -109,7 +109,7 @@ void tst_AppcastMinSystemUpdateFilter::only10_5orEarlierPass()
     QCOMPARE(updates.at(1)->version(), QString("241"));
 }
 
-QIODevice *tst_AppcastMinSystemUpdateFilter::createIncomingData(const QNetworkRequest & req, QIODevice * outgoingData /* = 0 */)
+QIODevice *tst_AppcastMinSysUpdateFilter::createIncomingData(const QNetworkRequest & req, QIODevice * outgoingData /* = 0 */)
 {
     Q_UNUSED(outgoingData)
 
@@ -133,12 +133,12 @@ QIODevice *tst_AppcastMinSystemUpdateFilter::createIncomingData(const QNetworkRe
     return 0;
 }
 
-void tst_AppcastMinSystemUpdateFilter::onFinished()
+void tst_AppcastMinSysUpdateFilter::onFinished()
 {
     mEventLoop.quit();
 }
 
-void tst_AppcastMinSystemUpdateFilter::onError(qint32 code)
+void tst_AppcastMinSysUpdateFilter::onError(qint32 code)
 {
     Q_UNUSED(code)
 
@@ -149,10 +149,10 @@ void tst_AppcastMinSystemUpdateFilter::onError(qint32 code)
     mEventLoop.quit();
 }
 
-void tst_AppcastMinSystemUpdateFilter::onTimeout()
+void tst_AppcastMinSysUpdateFilter::onTimeout()
 {
     mEventLoop.quit();
 }
 
 
-QTEST_MAIN(tst_AppcastMinSystemUpdateFilter)
+QTEST_MAIN(tst_AppcastMinSysUpdateFilter)

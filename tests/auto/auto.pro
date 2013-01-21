@@ -3,6 +3,6 @@ TEMPLATE = subdirs
 SUBDIRS += \
     appcastenclosure \
     appcastitem \
-    appcastminsystemupdatefilter \
+    appcastminsysupdatefilter \
     appcastupdatechecker \
     semversortupdatefilter

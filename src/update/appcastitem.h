@@ -27,7 +27,7 @@ public:
     QString version() const;
     QUrl linkUrl() const;
     const AppcastEnclosure *enclosure() const;
-    QString minSystemVersion() const;
+    QString minSysVersion() const;
     
 private:
     IXmlDeserializing *deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes);

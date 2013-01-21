@@ -34,7 +34,7 @@ void tst_AppcastItem::readElement()
     QCOMPARE(mItem->title(), QString("Version 2.0 (2 bugs fixed; 3 new features)"));
     QCOMPARE(mItem->version(), QString("2.0"));
     QCOMPARE(mItem->linkUrl(), QUrl("http://you.com/app/index.html"));
-    QCOMPARE(mItem->minSystemVersion(), QString(""));
+    QCOMPARE(mItem->minSysVersion(), QString(""));
     
     QVERIFY(mItem->enclosure());
 }
@@ -51,7 +51,7 @@ void tst_AppcastItem::readMinimumSystemVersion()
     QCOMPARE(mItem->title(), QString("Version 2.0 (2 bugs fixed; 3 new features)"));
     QCOMPARE(mItem->version(), QString("2.0"));
     QCOMPARE(mItem->linkUrl(), QUrl("http://you.com/app/index.html"));
-    QCOMPARE(mItem->minSystemVersion(), QString("10.6.0"));
+    QCOMPARE(mItem->minSysVersion(), QString("10.6.0"));
     
     QVERIFY(mItem->enclosure());
 }

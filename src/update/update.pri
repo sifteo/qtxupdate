@@ -4,7 +4,7 @@ HEADERS += \
     $$PWD/abstractversioncomparator.h \
     $$PWD/appcastenclosure.h \
     $$PWD/appcastitem.h \
-    $$PWD/appcastminsystemupdatefilter.h \
+    $$PWD/appcastminsysupdatefilter.h \
     $$PWD/appcastupdate.h \
     $$PWD/appcastupdatechecker.h \
     $$PWD/appcastxmlns.h \
@@ -20,7 +20,7 @@ SOURCES += \
     $$PWD/abstractversioncomparator.cpp \
     $$PWD/appcastenclosure.cpp \
     $$PWD/appcastitem.cpp \
-    $$PWD/appcastminsystemupdatefilter.cpp \
+    $$PWD/appcastminsysupdatefilter.cpp \
     $$PWD/appcastupdate.cpp \
     $$PWD/appcastupdatechecker.cpp \
     $$PWD/appcastxmlns.cpp \

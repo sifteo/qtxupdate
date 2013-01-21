@@ -1,45 +1,45 @@
-#include "appcastminsystemupdatefilter.h"
+#include "appcastminsysupdatefilter.h"
 #include "appcastupdate.h"
 #include <QtxVersion>
 
 QTX_BEGIN_NAMESPACE
 
 
-class AppcastMinSystemUpdateFilterPrivate
+class AppcastMinSysUpdateFilterPrivate
 {
 public:
-    static Version sysVersion();
+    static Version osVersion();
     
-    Version systemVersion;
+    Version sysVersion;
 };
 
 
-AppcastMinSystemUpdateFilter::AppcastMinSystemUpdateFilter(QObject *parent /* = 0 */)
+AppcastMinSysUpdateFilter::AppcastMinSysUpdateFilter(QObject *parent /* = 0 */)
     : AbstractUpdateFilter(parent),
-      d_ptr(new AppcastMinSystemUpdateFilterPrivate())
+      d_ptr(new AppcastMinSysUpdateFilterPrivate())
 {
-    d_ptr->systemVersion = AppcastMinSystemUpdateFilterPrivate::sysVersion();
+    d_ptr->sysVersion = AppcastMinSysUpdateFilterPrivate::osVersion();
 }
 
-AppcastMinSystemUpdateFilter::AppcastMinSystemUpdateFilter(const QString & systemVersion, QObject *parent /* = 0 */)
+AppcastMinSysUpdateFilter::AppcastMinSysUpdateFilter(const QString & version, QObject *parent /* = 0 */)
     : AbstractUpdateFilter(parent),
-      d_ptr(new AppcastMinSystemUpdateFilterPrivate())
+      d_ptr(new AppcastMinSysUpdateFilterPrivate())
 {
-    d_ptr->systemVersion = Version(systemVersion);
+    d_ptr->sysVersion = Version(version);
 }
 
-AppcastMinSystemUpdateFilter::~AppcastMinSystemUpdateFilter()
+AppcastMinSysUpdateFilter::~AppcastMinSysUpdateFilter()
 {
 }
 
-QList<Update *> AppcastMinSystemUpdateFilter::filter(const QList<Update *> candidates)
+QList<Update *> AppcastMinSysUpdateFilter::filter(const QList<Update *> candidates)
 {
     QList<Update *> filtered;
     foreach (Update *candidate, candidates) {
         AppcastUpdate *update = qobject_cast<AppcastUpdate *>(candidate);
         if (update) {
-            Version systemVersion = d_ptr->systemVersion;
-            Version minSystemVersion(update->minSystemVersion());
+            Version systemVersion = d_ptr->sysVersion;
+            Version minSystemVersion(update->minSysVersion());
             
             if (!systemVersion.isValid()) {
                 // An unknown system is typically a newer version of the OS than
@@ -70,7 +70,7 @@ QList<Update *> AppcastMinSystemUpdateFilter::filter(const QList<Update *> candi
     return filtered;
 }
 
-Version AppcastMinSystemUpdateFilterPrivate::sysVersion()
+Version AppcastMinSysUpdateFilterPrivate::osVersion()
 {
 #if defined Q_OS_WIN
     switch (QSysInfo::WindowsVersion) {

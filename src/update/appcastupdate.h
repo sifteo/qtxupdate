@@ -25,7 +25,7 @@ public:
     QUrl packageUrl() const;
     QString mimeType() const;
     
-    QString minSystemVersion() const;
+    QString minSysVersion() const;
     
 protected:
     AppcastUpdatePrivate *d_ptr;

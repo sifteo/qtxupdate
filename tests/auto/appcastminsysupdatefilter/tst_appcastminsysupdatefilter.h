@@ -1,16 +1,16 @@
-#ifndef TST_APPCASTMINSYSTEMUPDATEFILTER_H
-#define TST_APPCASTMINSYSTEMUPDATEFILTER_H
+#ifndef TST_APPCASTMINSYSUPDATEFILTER_H
+#define TST_APPCASTMINSYSUPDATEFILTER_H
 
 #include "appcastupdatechecker.h"
-#include "appcastminsystemupdatefilter.h"
+#include "appcastminsysupdatefilter.h"
 #include <QtxMockNetwork>
 #include <QtTest/QtTest>
 
 QTX_USE_NAMESPACE
 
 
-class tst_AppcastMinSystemUpdateFilter : public QObject,
-                                         public IMockNetworkAccessManagerDelegate
+class tst_AppcastMinSysUpdateFilter : public QObject,
+                                      public IMockNetworkAccessManagerDelegate
 {
     Q_OBJECT
 
@@ -39,4 +39,4 @@ public slots:
     void onTimeout();
 };
 
-#endif // TST_APPCASTMINSYSTEMUPDATEFILTER_H
+#endif // TST_APPCASTMINSYSUPDATEFILTER_H

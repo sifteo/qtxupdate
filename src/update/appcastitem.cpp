@@ -15,7 +15,7 @@ public:
     QString title;
     QUrl link;
     QList<AppcastEnclosure *> enclosures;
-    QString minSystemVersion;
+    QString minSysVersion;
     
     QString characters;
 };
@@ -77,9 +77,9 @@ const AppcastEnclosure *AppcastItem::enclosure() const
     return d_ptr->enclosures.at(0);
 }
 
-QString AppcastItem::minSystemVersion() const
+QString AppcastItem::minSysVersion() const
 {
-    return d_ptr->minSystemVersion;
+    return d_ptr->minSysVersion;
 }
 
 IXmlDeserializing *AppcastItem::deserializeXmlStartElement(XmlDeserializer *deserializer, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes)
@@ -106,7 +106,7 @@ void AppcastItem::deserializeXmlEndElement(XmlDeserializer *deserializer, const 
     } else if (kRssLinkXmlName == name) {
         d_ptr->link = QUrl(d_ptr->characters.trimmed());
     } else if (kSparkleXmlNamespaceUri == namespaceUri && kSparkleMinimumSystemVersionXmlName == name) {
-        d_ptr->minSystemVersion = d_ptr->characters.trimmed();
+        d_ptr->minSysVersion = d_ptr->characters.trimmed();
     }
     
     d_ptr->characters.clear();

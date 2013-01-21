@@ -84,13 +84,13 @@ QString AppcastUpdate::mimeType() const
     return enclosure->mimeType();
 }
 
-QString AppcastUpdate::minSystemVersion() const
+QString AppcastUpdate::minSysVersion() const
 {
     if (!d_ptr->item) {
         return "";
     }
     
-    return d_ptr->item->minSystemVersion();
+    return d_ptr->item->minSysVersion();
 }
 
 
