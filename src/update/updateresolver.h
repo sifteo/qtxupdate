@@ -11,6 +11,7 @@ class AbstractUpdateChecker;
 class AbstractVersionComparator;
 class AbstractUpdateFilter;
 class Update;
+class UpdateResolverPrivate;
 
 class UpdateResolver : public QObject
 {
@@ -35,21 +36,24 @@ public:
     void addUpdateFilter(AbstractUpdateFilter *filter);
     void setVersionComparator(AbstractVersionComparator *comparator);
     
+    QString errorString() const;
+    
 signals:
     void updateAvailable(Update *);
     void noUpdateAvailable();
     void error(UpdateResolver::Error code);
     
+protected:
+    void setErrorString(const QString & str);
+    
 private slots:
     void onCheckerFinished();
     void onCheckerError(qint32 code);
-
-private:
-    QString mVersion;
     
-    AbstractUpdateChecker *mChecker;
-    AbstractVersionComparator *mComparator;
-    QList<AbstractUpdateFilter *> mFilters;
+protected:
+    UpdateResolverPrivate *d_ptr;
+private:
+    Q_DECLARE_PRIVATE(UpdateResolver);
 };
 
 
