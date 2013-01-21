@@ -30,6 +30,10 @@ AppcastMinSysUpdateFilter::AppcastMinSysUpdateFilter(const QString & version, QO
 
 AppcastMinSysUpdateFilter::~AppcastMinSysUpdateFilter()
 {
+    if (d_ptr) {
+        delete d_ptr;
+        d_ptr = 0;
+    }
 }
 
 QList<Update *> AppcastMinSysUpdateFilter::filter(const QList<Update *> candidates)

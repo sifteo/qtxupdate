@@ -18,6 +18,10 @@ private slots:
     void updateFromTest();
     void updateFromWithNoUpdatesTest();
     void updateFromInvalidVersionTest();
+    void updateFromInvalidCheckerTest();
+    
+    void filterTest();
+    void multipleFilterTest();
     
 private:
     UpdateResolver *mResolver;

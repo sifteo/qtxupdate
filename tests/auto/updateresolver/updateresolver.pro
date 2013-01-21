@@ -8,7 +8,9 @@ include(../../../mkspecs/test.pri)
 
 HEADERS += tst_updateresolver.h \
            ../../mock/src/mockupdate.h \
-           ../../mock/src/mockupdatechecker.h
+           ../../mock/src/mockupdatechecker.h \
+           ../../mock/src/versionlimitupdatefilter.h
 SOURCES += tst_updateresolver.cpp \
            ../../mock/src/mockupdate.cpp \
-           ../../mock/src/mockupdatechecker.cpp
+           ../../mock/src/mockupdatechecker.cpp \
+           ../../mock/src/versionlimitupdatefilter.cpp
