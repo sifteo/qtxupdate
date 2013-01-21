@@ -13,6 +13,7 @@ MockUpdateChecker::~MockUpdateChecker()
 
 void MockUpdateChecker::check()
 {
+    emit finished();
 }
 
 QList<Update *> MockUpdateChecker::updates()

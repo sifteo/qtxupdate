@@ -12,8 +12,13 @@ class tst_UpdateResolver : public QObject
     Q_OBJECT
 
 private slots:
+    void initTestCase();
     void init();
     void cleanup();
+    
+    void resolveTest();
+    void resolveNoUpdateTest();
+    void resolveInvalidCheckerError();
 
     void updateFromTest();
     void updateFromWithNoUpdatesTest();

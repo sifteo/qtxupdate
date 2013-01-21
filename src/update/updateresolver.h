@@ -30,9 +30,9 @@ public:
     void resolve(const QString & version);
     Update *updateFrom(const QString & version);
     
-    void setChecker(AbstractUpdateChecker *checker);
-    void setComparator(AbstractVersionComparator *comparator);
-    void addFilter(AbstractUpdateFilter *filter);
+    void setUpdateChecker(AbstractUpdateChecker *checker);
+    void addUpdateFilter(AbstractUpdateFilter *filter);
+    void setVersionComparator(AbstractVersionComparator *comparator);
     
 signals:
     void updateAvailable(Update *);

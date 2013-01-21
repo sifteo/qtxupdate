@@ -82,7 +82,7 @@ Update *UpdateResolver::updateFrom(const QString & version)
     return 0;
 }
 
-void UpdateResolver::setChecker(AbstractUpdateChecker *checker)
+void UpdateResolver::setUpdateChecker(AbstractUpdateChecker *checker)
 {
     if (mChecker) {
         mChecker->disconnect(this);
@@ -95,7 +95,13 @@ void UpdateResolver::setChecker(AbstractUpdateChecker *checker)
     connect(mChecker, SIGNAL(error(qint32)), SLOT(onCheckerError(qint32)));
 }
 
-void UpdateResolver::setComparator(AbstractVersionComparator *comparator)
+void UpdateResolver::addUpdateFilter(AbstractUpdateFilter *filter)
+{
+    filter->setParent(this);
+    mFilters.append(filter);
+}
+
+void UpdateResolver::setVersionComparator(AbstractVersionComparator *comparator)
 {
     if (mComparator) {
         mComparator->deleteLater();
@@ -103,12 +109,6 @@ void UpdateResolver::setComparator(AbstractVersionComparator *comparator)
     
     comparator->setParent(this);
     mComparator = comparator;
-}
-
-void UpdateResolver::addFilter(AbstractUpdateFilter *filter)
-{
-    filter->setParent(this);
-    mFilters.append(filter);
 }
 
 void UpdateResolver::onCheckerFinished()
