@@ -5,6 +5,8 @@
 #include "../../mock/src/versionlimitupdatefilter.h"
 
 
+Q_DECLARE_METATYPE(Update *);
+
 void tst_UpdateResolver::initTestCase()
 {
     qRegisterMetaType<Update *>("Update *");
