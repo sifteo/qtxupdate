@@ -35,13 +35,13 @@ void tst_UpdateResolver::resolveTest()
     
     
     QSignalSpy updateAvailableSpy(mResolver, SIGNAL(updateAvailable(Update *)));
-    QSignalSpy noUpdateAvailableSpy(mResolver, SIGNAL(noUpdateAvailable()));
+    QSignalSpy updateNotAvailableSpy(mResolver, SIGNAL(updateNotAvailable()));
     QSignalSpy errorSpy(mResolver, SIGNAL(error(UpdateResolver::Error)));
     
     mResolver->resolve("1.6");
     
     QVERIFY(updateAvailableSpy.count() == 1);
-    QVERIFY(noUpdateAvailableSpy.count() == 0);
+    QVERIFY(updateNotAvailableSpy.count() == 0);
     QVERIFY(errorSpy.count() == 0);
     
     QList<QVariant> arguments;
@@ -63,13 +63,13 @@ void tst_UpdateResolver::resolveNoUpdateTest()
     
     
     QSignalSpy updateAvailableSpy(mResolver, SIGNAL(updateAvailable(Update *)));
-    QSignalSpy noUpdateAvailableSpy(mResolver, SIGNAL(noUpdateAvailable()));
+    QSignalSpy updateNotAvailableSpy(mResolver, SIGNAL(updateNotAvailable()));
     QSignalSpy errorSpy(mResolver, SIGNAL(error(UpdateResolver::Error)));
     
     mResolver->resolve("1.6");
     
     QVERIFY(updateAvailableSpy.count() == 0);
-    QVERIFY(noUpdateAvailableSpy.count() == 1);
+    QVERIFY(updateNotAvailableSpy.count() == 1);
     QVERIFY(errorSpy.count() == 0);
     
     delete checker;
@@ -81,13 +81,13 @@ void tst_UpdateResolver::resolveErrorTest()
     mResolver->setUpdateChecker(checker);
 
     QSignalSpy updateAvailableSpy(mResolver, SIGNAL(updateAvailable(Update *)));
-    QSignalSpy noUpdateAvailableSpy(mResolver, SIGNAL(noUpdateAvailable()));
+    QSignalSpy updateNotAvailableSpy(mResolver, SIGNAL(updateNotAvailable()));
     QSignalSpy errorSpy(mResolver, SIGNAL(error(UpdateResolver::Error)));
     
     mResolver->resolve("1.6");
     
     QVERIFY(updateAvailableSpy.count() == 0);
-    QVERIFY(noUpdateAvailableSpy.count() == 0);
+    QVERIFY(updateNotAvailableSpy.count() == 0);
     QVERIFY(errorSpy.count() == 1);
     
     QList<QVariant> arguments = errorSpy.takeFirst();
@@ -97,13 +97,13 @@ void tst_UpdateResolver::resolveErrorTest()
 void tst_UpdateResolver::resolveInvalidCheckerError()
 {
     QSignalSpy updateAvailableSpy(mResolver, SIGNAL(updateAvailable(Update *)));
-    QSignalSpy noUpdateAvailableSpy(mResolver, SIGNAL(noUpdateAvailable()));
+    QSignalSpy updateNotAvailableSpy(mResolver, SIGNAL(updateNotAvailable()));
     QSignalSpy errorSpy(mResolver, SIGNAL(error(UpdateResolver::Error)));
     
     mResolver->resolve("1.6");
     
     QVERIFY(updateAvailableSpy.count() == 0);
-    QVERIFY(noUpdateAvailableSpy.count() == 0);
+    QVERIFY(updateNotAvailableSpy.count() == 0);
     QVERIFY(errorSpy.count() == 1);
     
     QList<QVariant> arguments = errorSpy.takeFirst();

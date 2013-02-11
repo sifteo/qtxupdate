@@ -40,7 +40,7 @@ public:
     
 signals:
     void updateAvailable(Update *);
-    void noUpdateAvailable();
+    void updateNotAvailable();
     void error(UpdateResolver::Error code);
     
 protected:

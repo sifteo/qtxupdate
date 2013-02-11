@@ -151,7 +151,7 @@ void UpdateResolver::onCheckerFinished()
     if (update) {
         emit updateAvailable(update);
     } else {
-        emit noUpdateAvailable();
+        emit updateNotAvailable();
     }
 }
 
