@@ -58,6 +58,15 @@ QUrl AppcastUpdate::linkUrl() const
     return d_ptr->item->linkUrl();
 }
 
+QUrl AppcastUpdate::releaseNotesUrl() const
+{
+    if (!d_ptr->item) {
+        return QUrl();
+    }
+    
+    return d_ptr->item->releaseNotesUrl();
+}
+
 QUrl AppcastUpdate::packageUrl() const
 {
     if (!d_ptr->item) {
