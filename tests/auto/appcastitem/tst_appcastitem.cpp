@@ -34,6 +34,7 @@ void tst_AppcastItem::readElement()
     QCOMPARE(mItem->title(), QString("Version 2.0 (2 bugs fixed; 3 new features)"));
     QCOMPARE(mItem->version(), QString("2.0"));
     QCOMPARE(mItem->linkUrl(), QUrl("http://you.com/app/index.html"));
+    QCOMPARE(mItem->releaseNotesUrl(), QUrl("http://you.com/app/2.0.html"));
     QCOMPARE(mItem->minSysVersion(), QString(""));
     
     QVERIFY(mItem->enclosure());

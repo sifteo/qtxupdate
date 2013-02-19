@@ -12,6 +12,7 @@ const char *kRssEnclosureUrlXmlAttr             = "url";
 const char *kRssEnclosureTypeXmlAttr            = "type";
 
 const char *kSparkleXmlNamespaceUri             = "http://www.andymatuschak.org/xml-namespaces/sparkle";
+const char *kSparkleReleaseNotesLinkXmlName     = "releaseNotesLink";
 const char *kSparkleMinimumSystemVersionXmlName = "minimumSystemVersion";
 const char *kSparkleEnclosureVersionXmlAttr     = "version";
 

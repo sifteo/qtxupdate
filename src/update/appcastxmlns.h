@@ -15,6 +15,7 @@ extern const char *kRssEnclosureUrlXmlAttr;
 extern const char *kRssEnclosureTypeXmlAttr;
 
 extern const char *kSparkleXmlNamespaceUri;
+extern const char *kSparkleReleaseNotesLinkXmlName;
 extern const char *kSparkleMinimumSystemVersionXmlName;
 extern const char *kSparkleEnclosureVersionXmlAttr;
 

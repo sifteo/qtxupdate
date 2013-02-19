@@ -26,6 +26,7 @@ public:
     QString title() const;
     QString version() const;
     QUrl linkUrl() const;
+    QUrl releaseNotesUrl() const;
     const AppcastEnclosure *enclosure() const;
     QString minSysVersion() const;
     

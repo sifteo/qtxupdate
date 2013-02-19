@@ -14,6 +14,7 @@ public:
 
     QString title;
     QUrl link;
+    QUrl releaseNotesLink;
     QList<AppcastEnclosure *> enclosures;
     QString minSysVersion;
     
@@ -68,6 +69,11 @@ QUrl AppcastItem::linkUrl() const
     return d_ptr->link;
 }
 
+QUrl AppcastItem::releaseNotesUrl() const
+{
+    return d_ptr->releaseNotesLink;
+}
+
 const AppcastEnclosure *AppcastItem::enclosure() const
 {
     if (d_ptr->enclosures.isEmpty()) {
@@ -105,6 +111,8 @@ void AppcastItem::deserializeXmlEndElement(XmlDeserializer *deserializer, const 
         d_ptr->title = d_ptr->characters.trimmed();
     } else if (kRssLinkXmlName == name) {
         d_ptr->link = QUrl(d_ptr->characters.trimmed());
+    } else if (kSparkleXmlNamespaceUri == namespaceUri && kSparkleReleaseNotesLinkXmlName == name) {
+        d_ptr->releaseNotesLink = d_ptr->characters.trimmed();
     } else if (kSparkleXmlNamespaceUri == namespaceUri && kSparkleMinimumSystemVersionXmlName == name) {
         d_ptr->minSysVersion = d_ptr->characters.trimmed();
     }
