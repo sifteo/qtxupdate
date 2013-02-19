@@ -26,6 +26,11 @@ QUrl MockUpdate::linkUrl() const
     return QUrl();
 }
 
+QUrl MockUpdate::releaseNotesUrl() const
+{
+    return QUrl();
+}
+
 QUrl MockUpdate::packageUrl() const
 {
     return QUrl();

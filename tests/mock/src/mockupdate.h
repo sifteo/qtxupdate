@@ -18,6 +18,7 @@ public:
     QString title() const;
     QString version() const;
     QUrl linkUrl() const;
+    QUrl releaseNotesUrl() const;
     QUrl packageUrl() const;
     QString mimeType() const;
     
