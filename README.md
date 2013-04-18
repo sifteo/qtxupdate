@@ -2,7 +2,7 @@
 
 QtxUpdate provides classes to make software update checks easier, including
 support for [appcasting](http://connectedflow.com/appcasting/) with [Sparkle](http://sparkle.andymatuschak.org/)
-[extensions](https://github.com/andymatuschak/Sparkle/wiki/Publishing-An-Update)
+[extensions](https://github.com/andymatuschak/Sparkle/wiki/Publishing-An-Update).
 
 ## Tests
 
