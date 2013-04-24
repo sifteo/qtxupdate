@@ -15,6 +15,7 @@ const char *kSparkleXmlNamespaceUri             = "http://www.andymatuschak.org/
 const char *kSparkleReleaseNotesLinkXmlName     = "releaseNotesLink";
 const char *kSparkleMinimumSystemVersionXmlName = "minimumSystemVersion";
 const char *kSparkleEnclosureVersionXmlAttr     = "version";
+const char *kSparkleEnclosureMd5SumXmlAttr      = "md5Sum";
 
 }
 

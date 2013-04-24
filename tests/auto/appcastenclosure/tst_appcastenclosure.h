@@ -18,6 +18,7 @@ private slots:
     void cleanup();
     
     void readElement();
+    void readElementWithMd5Sum();
     
 protected:
     virtual IXmlDeserializing* deserializeXmlStart(XmlDeserializer *deserializer, const QStringRef & namespaceUri, const QStringRef & name, const QXmlStreamAttributes & attributes);

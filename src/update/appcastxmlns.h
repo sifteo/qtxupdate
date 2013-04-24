@@ -18,6 +18,7 @@ extern const char *kSparkleXmlNamespaceUri;
 extern const char *kSparkleReleaseNotesLinkXmlName;
 extern const char *kSparkleMinimumSystemVersionXmlName;
 extern const char *kSparkleEnclosureVersionXmlAttr;
+extern const char *kSparkleEnclosureMd5SumXmlAttr;
 
 }
 

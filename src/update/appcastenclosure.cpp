@@ -13,6 +13,7 @@ public:
     QString version;
     QUrl url;
     QString type;
+    QString md5;
 };
 
 
@@ -51,6 +52,11 @@ QString AppcastEnclosure::mimeType() const
     return d_ptr->type;
 }
 
+QString AppcastEnclosure::md5Sum() const
+{
+    return d_ptr->md5;
+}
+
 void AppcastEnclosure::deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes)
 {
     Q_UNUSED(deserializer)
@@ -58,6 +64,7 @@ void AppcastEnclosure::deserializeXmlAttributes(XmlDeserializer *deserializer, c
     d_ptr->version = attributes.value(kSparkleXmlNamespaceUri, kSparkleEnclosureVersionXmlAttr).toString();
     d_ptr->url = QUrl(attributes.value(kRssEnclosureUrlXmlAttr).toString());
     d_ptr->type = attributes.value(kRssEnclosureTypeXmlAttr).toString();
+    d_ptr->md5 = attributes.value(kSparkleXmlNamespaceUri, kSparkleEnclosureMd5SumXmlAttr).toString();
 }
 
 

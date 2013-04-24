@@ -25,6 +25,7 @@ public:
     QString version() const;
     QUrl url() const;
     QString mimeType() const;
+    QString md5Sum() const;
     
     
     void deserializeXmlAttributes(XmlDeserializer *deserializer, const QXmlStreamAttributes & attributes);
