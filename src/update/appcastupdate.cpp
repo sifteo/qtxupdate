@@ -93,6 +93,19 @@ QString AppcastUpdate::mimeType() const
     return enclosure->mimeType();
 }
 
+QString AppcastUpdate::md5Sum() const
+{
+    if (!d_ptr->item) {
+        return "";
+    }
+    
+    const AppcastEnclosure *enclosure = d_ptr->item->enclosure();
+    if (!enclosure) {
+        return "";
+    }
+    return enclosure->md5Sum();
+}
+
 QString AppcastUpdate::minSysVersion() const
 {
     if (!d_ptr->item) {

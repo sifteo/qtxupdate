@@ -15,12 +15,13 @@ public:
     Update(QObject *parent = 0);
     virtual ~Update();
     
-    virtual QString title() const = 0;
+    virtual QString title() const;
     virtual QString version() const = 0;
-    virtual QUrl linkUrl() const = 0;
-    virtual QUrl releaseNotesUrl() const = 0;
+    virtual QUrl linkUrl() const;
+    virtual QUrl releaseNotesUrl() const;
     virtual QUrl packageUrl() const = 0;
-    virtual QString mimeType() const = 0;
+    virtual QString mimeType() const;
+    virtual QString md5Sum() const;
 };
 
 

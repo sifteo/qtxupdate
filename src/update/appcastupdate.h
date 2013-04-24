@@ -25,6 +25,7 @@ public:
     QUrl releaseNotesUrl() const;
     QUrl packageUrl() const;
     QString mimeType() const;
+    QString md5Sum() const;
     
     QString minSysVersion() const;
     
