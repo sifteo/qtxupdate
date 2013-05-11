@@ -1,0 +1,11 @@
+/*!
+    \module QtxUpdate
+    \title QtxUpdate
+    \brief The QtxUpdate module contains classes to make software update checks easier.
+    
+    To include the definitions of this module's classes, use the following directive:
+    
+    \code
+        #include <QtxUpdate>
+    \endcode
+*/
